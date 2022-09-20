@@ -33,22 +33,21 @@ echo "... set!!"
 echo "Cinder Storage !!"
 
 fdisk -l
-read -p "Do you fix /dev/sdX?? {yen|no|ENTER=no} :" CHECKER_SD
-if [ "$CHECKER_SD" = "yes" ]; then
-    echo "good!"
+read -p "Do you Run fdisk? ?? {yen|no|ENTER=no} :" CHECKER_fdisk
+if [ "$CHECKER_fdisk" = "yes" ]; then
+    echo "good !!"
+    read -p "Inpute the X ?? {b|c|ENTER=b} :" CHECKER_SDX
     lsblk
+    partprobe -s
+    partprobe /dev/sd${CHECKER_SDX}1
 else
-    echo "please check the your disk"
-    echo "fdisk /dev/${CHECKER_SD}"
+    echo "---please check the your disk---"
+    echo "fdisk /dev/sdb"
     echo "> n > p > 1 > enter > 최대m"
     echo "> t > 8e > w"
     echo "lsblk"
     exit 100
 fi
-
-partprobe -s
-partprobe /dev/sdb1
-
 
 ##################################
 # Storage node
@@ -56,3 +55,9 @@ partprobe /dev/sdb1
 echo "[Prerequisites]"
 
 apt install lvm2 thin-provisioning-tools
+
+pvcreate /dev/sd${CHECKER_SDX}1
+pvdisplay
+
+vgcreate cinder-volumes /dev/sd${CHECKER_SDX}1
+vgdisplay
