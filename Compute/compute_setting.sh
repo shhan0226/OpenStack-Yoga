@@ -93,7 +93,3 @@ chronyc sources
 ##################################
 add-apt-repository cloud-archive:yoga -y
 sudo apt install python3-openstackclient -y
-
-echo "Fix CryptographyDeprecationWarning"
-pip3 uninstall matrix-synapse twisted cryptography bcrypt cftp
-pip3 install cryptography==3.2
