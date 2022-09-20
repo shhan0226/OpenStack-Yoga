@@ -104,7 +104,7 @@ sync
 # Message queue for Ubuntu
 ##################################
 apt install -y rabbitmq-server
-rabbitmqctl add_user openstack stack
+rabbitmqctl add_user openstack $STACK_PASSWD
 rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
 
