@@ -33,10 +33,12 @@ echo "... set!!"
 echo "Cinder Storage !!"
 
 fdisk -l
-read -p "Do you fix /dev/sdX?? {yen|no|ENTER=yes} :" CHECKER_SD
+read -p "Do you fix /dev/sdX?? {yen|no|ENTER=no} :" CHECKER_SD
 if [ "$CHECKER_SD" = "yes" ]; then
     echo "good!"
+    lsblk
 else
+    echo "please check the your disk"
     echo "fdisk /dev/${CHECKER_SD}"
     echo "> n > p > 1 > enter > 최대m"
     echo "> t > 8e > w"
