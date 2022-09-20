@@ -11,12 +11,8 @@ else
     echo "It's not a root account."
 	  exit 100
 fi
-#read -p "Do you want to install Glance? {yes|no|ENTER=yes} " CHECKER_NO_
-#if [ "$CHECKER_NO_" = "no" ]; then
-#    exit 100
-#else
-#    echo "Keep Going!!"
-#fi
+
+
 ##################################
 # auth
 ##################################
@@ -27,29 +23,52 @@ echo "$SET_IP2"
 echo "$SET_IP_ALLOW"
 echo "$INTERFACE_NAME_"
 echo "$STACK_PASSWD"
+echo "$CPU_ARCH"
 echo "... set!!"
+
+
 ##################################
 # Glance
 ##################################
 echo "Glance !!"
+
+echo "[Prerequisites]"
+
+
 echo "Glance CREATE DB ..."
 mysql -e "CREATE DATABASE glance;"
 mysql -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY '${STACK_PASSWD}';"
 mysql -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY '${STACK_PASSWD}';"
 mysql -e "FLUSH PRIVILEGES;"
+
+
 echo "Glance CREATE SERVICE ..."
 . admin-openrc
 openstack user create --domain default --password ${STACK_PASSWD} glance
 openstack role add --project service --user glance admin
+
 openstack service create --name glance \
   --description "OpenStack Image" image
+
+
 echo "Glance - Create the Image service API endpoints ..."
 openstack endpoint create --region RegionOne \
   image public http://${SET_IP}:9292
+
 openstack endpoint create --region RegionOne \
   image internal http://${SET_IP}:9292
+
 openstack endpoint create --region RegionOne \
   image admin http://${SET_IP}:9292
+
+
+echo "Register quota limits (optional):"
+# openstack --os-cloud devstack-system-admin registered limit create --service glance --default-limit 1000 --region RegionOne image_size_total
+# openstack --os-cloud devstack-system-admin registered limit create --service glance --default-limit 1000 --region RegionOne image_stage_total
+# openstack --os-cloud devstack-system-admin registered limit create --service glance --default-limit 100 --region RegionOne image_count_total
+# openstack --os-cloud devstack-system-admin registered limit create --service glance --default-limit 100 --region RegionOne image_count_uploading
+
+
 echo "Glance Install ..."
 apt install -y glance
 crudini --set /etc/glance/glance-api.conf database connection mysql+pymysql://glance:${STACK_PASSWD}@${SET_IP}/glance
@@ -66,9 +85,25 @@ crudini --set /etc/glance/glance-api.conf paste_deploy flavor keystone
 crudini --set /etc/glance/glance-api.conf glance_store stores file,http
 crudini --set /etc/glance/glance-api.conf glance_store default_store file
 crudini --set /etc/glance/glance-api.conf glance_store filesystem_store_datadir /var/lib/glance/images/
+
+crudini --set /etc/glance/glance-api.conf oslo_limit auth_url http://${SET_IP}:5000
+crudini --set /etc/glance/glance-api.conf oslo_limit auth_type password
+crudini --set /etc/glance/glance-api.conf oslo_limit user_domain_id default
+crudini --set /etc/glance/glance-api.conf oslo_limit username admin
+crudini --set /etc/glance/glance-api.conf oslo_limit system_scope all
+crudini --set /etc/glance/glance-api.conf oslo_limit password ${STACK_PASSWD}
+ENDPOINT_ID="openstack endpoint list -c ID --interface admin -f value"
+crudini --set /etc/glance/glance-api.conf oslo_limit endpoint_id ${ENDPOINT_ID}
+crudini --set /etc/glance/glance-api.conf oslo_limit region_name RegionOne
+openstack role add --user admin --user-domain Default --system all reader
+
 echo "Glance Reg. DB ..."
 su -s /bin/sh -c "glance-manage db_sync" glance
+
+echo "[Finalize installation]"
 service glance-api restart
+
+
 echo "Glance Verify operation ..."
 sync
 . admin-openrc
