@@ -11,12 +11,8 @@ else
     echo "It's not a root account."
 	exit 100
 fi
-#read -p "Do you want to install Nova? {yes|no|ENTER=yes} " CHECKER_NO_
-#if [ "$CHECKER_NO_" = "no" ]; then
-#    exit 100
-#else
-#    echo "Keep Going!!"
-#fi
+
+# INPUT DATA PRINT
 echo "$CONTROLLER_HOST"
 echo "$COMPUTE_HOST"
 echo "$SET_IP"
@@ -24,7 +20,10 @@ echo "$SET_IP2"
 echo "$SET_IP_ALLOW"
 echo "$INTERFACE_NAME_"
 echo "$STACK_PASSWD"
+echo "$CPU_ARCH"
 echo "... set!!"
+
+
 ##################################
 # Nova compute
 ##################################
@@ -56,14 +55,39 @@ crudini --set /etc/nova/nova.conf placement user_domain_name Default
 crudini --set /etc/nova/nova.conf placement auth_url http://${SET_IP}:5000/v3
 crudini --set /etc/nova/nova.conf placement username placement
 crudini --set /etc/nova/nova.conf placement password ${STACK_PASSWD}
-echo "Finalize installation"
+
+
+echo "[Finalize installation]"
+
 egrep -c '(vmx|svm)' /proc/cpuinfo
-apt-get install qemu-kvm -y
-apt-get install libvirt-bin -y
-apt-get install virtinst -y
-apt-get install bridge-utils -y
-apt-get install cpu-checker -y
-apt-get install virt-manager -y 
-apt-get install qemu-efi -y
-sudo adduser $USER kvm
-service nova-compute restart
+
+echo "libvirt ..."
+
+echo "${CPU_ARCH}"
+if [ "$CPU_ARCH" = "arm64" ]; then
+    apt-get install qemu-kvm -y
+    apt-get install libvirt-bin -y
+    apt-get install virtinst -y
+    apt-get install bridge-utils -y
+    apt-get install cpu-checker -y
+    apt-get install virt-manager -y 
+    apt-get install qemu-efi -y
+    sudo adduser $USER kvm
+    service nova-compute restart
+else
+    crudini --set /etc/nova/nova-compute.conf libvirt virt_type qemu
+    service nova-compute restart
+fi
+
+
+echo "[Add the compute node to the cell database]"
+. admin-openrc
+ openstack compute service list --service nova-compute
+su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
+
+echo "discover_hosts..."
+crudini --set /etc/nova/nova.conf scheduler discover_hosts_in_cells_interval 300
+
+
+
+
