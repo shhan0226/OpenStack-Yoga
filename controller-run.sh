@@ -10,6 +10,7 @@ SET_IP2v="192.168.1.150"
 SET_IP_ALLOWv="192.168.0.0/22"
 INTERFACE_NAME_v="eth0|enP6p1s0|br-provider"
 STACK_PASSWDv="stack"
+CPU_ARCHv="arm64"
 
 read -p "Do you want to input ?? {yes|no|ENTER=no}" CHECKER_O_
 if [ "$CHECKER_O_" = "yes" ]; then
@@ -20,6 +21,7 @@ if [ "$CHECKER_O_" = "yes" ]; then
     read -p "Input the allow IP (ex 192.168.0.0/24): " SET_IP_ALLOWv
     read -p "Input INTERFACE_NAME: " INTERFACE_NAME_v
     read -p "Input STACK_PASSWD: " STACK_PASSWDv
+    read -p "Input CPU_ARCH: " CPU_ARCHv
     export CONTROLLER_HOST=$CONTROLLER_HOSTv
     export COMPUTE_HOST=$COMPUTE_HOSTv
     export SET_IP=$SET_IPv
@@ -27,6 +29,7 @@ if [ "$CHECKER_O_" = "yes" ]; then
     export SET_IP_ALLOW=$SET_IP_ALLOWv
     export INTERFACE_NAME_=$INTERFACE_NAME_v
     export STACK_PASSWD=$STACK_PASSWDv
+    export CPU_ARCH=$CPU_ARCHv
 else
     export CONTROLLER_HOST=$CONTROLLER_HOSTv
     export COMPUTE_HOST=$COMPUTE_HOSTv
@@ -35,6 +38,7 @@ else
     export SET_IP_ALLOW=$SET_IP_ALLOWv
     export INTERFACE_NAME_=$INTERFACE_NAME_v
     export STACK_PASSWD=$STACK_PASSWDv
+    export CPU_ARCH=$CPU_ARCHv
 fi
 
 # INPUT DATA PRINT
@@ -45,6 +49,7 @@ echo "$SET_IP2"
 echo "$SET_IP_ALLOW"
 echo "$INTERFACE_NAME_"
 echo "$STACK_PASSWD"
+echo "$CPU_ARCH"
 echo "... set!!"
 
 # INSTALL START

@@ -119,53 +119,68 @@ service memcached restart
 ##################################
 # Etcd for Ubuntu
 ##################################
-wget https://github.com/etcd-io/etcd/releases/download/v3.4.1/etcd-v3.4.1-linux-arm64.tar.gz
-tar -xvf etcd-v3.4.1-linux-arm64.tar.gz
-sudo cp etcd-v3.4.1-linux-arm64/etcd* /usr/bin/
-sudo groupadd --system etcd
-sudo useradd --home-dir "/var/lib/etcd" \
-        --system \
-        --shell /bin/false \
-        -g etcd \
-        etcd
-sudo mkdir -p /etc/etcd
-sudo chown etcd:etcd /etc/etcd
-sudo mkdir -p /var/lib/etcd
-sudo chown etcd:etcd /var/lib/etcd
-touch /etc/etcd/etcd.conf.yml
-echo "name: ${CONTROLLER_HOST}" >> /etc/etcd/etcd.conf.yml
-echo "data-dir: /var/lib/etcd" >> /etc/etcd/etcd.conf.yml
-echo "initial-cluster-state: 'new'" >> /etc/etcd/etcd.conf.yml
-echo "initial-cluster-token: 'etcd-cluster-01'" >> /etc/etcd/etcd.conf.yml
-echo "initial-cluster: ${CONTROLLER_HOST}=http://${SET_IP}:2380" >> /etc/etcd/etcd.conf.yml
-echo "initial-advertise-peer-urls: http://${SET_IP}:2380" >> /etc/etcd/etcd.conf.yml
-echo "advertise-client-urls: http://${SET_IP}:2379" >> /etc/etcd/etcd.conf.yml
-echo "listen-peer-urls: http://0.0.0.0:2380" >> /etc/etcd/etcd.conf.yml
-echo "listen-client-urls: http://${SET_IP}:2379" >> /etc/etcd/etcd.conf.yml
-touch /lib/systemd/system/etcd.service
-echo "[Unit]" >> /lib/systemd/system/etcd.service
-echo "Description=etcd - highly-available key value store">> /lib/systemd/system/etcd.service
-echo "Documentation=https://github.com/coreos/etcd" >> /lib/systemd/system/etcd.service
-echo "Documentation=man:etcd" >> /lib/systemd/system/etcd.service
-echo "After=network.target" >> /lib/systemd/system/etcd.service
-echo "Wants=network-online.target" >> /lib/systemd/system/etcd.service
-echo " " >> /lib/systemd/system/etcd.service
-echo "[Service]" >> /lib/systemd/system/etcd.service
-echo "Environment=DAEMON_ARGS=" >> /lib/systemd/system/etcd.service
-echo "Environment=ETCD_NAME=%H" >> /lib/systemd/system/etcd.service
-echo "Environment=ETCD_DATA_DIR=/vara/lib/etcd/default" >> /lib/systemd/system/etcd.service
-echo "Environment=\"ETCD_UNSUPPORTED_ARCH=arm64\"" >> /lib/systemd/system/etcd.service
-echo "EnvironmentFile=-/etc/default/%p" >> /lib/systemd/system/etcd.service
-echo "Type=notify" >> /lib/systemd/system/etcd.service
-echo "User=etcd" >> /lib/systemd/system/etcd.service
-echo "PermissionsStartOnly=true" >> /lib/systemd/system/etcd.service
-echo "ExecStart=/usr/bin/etcd --config-file /etc/etcd/etcd.conf.yml" >> /lib/systemd/system/etcd.service
-echo "Restart=on-abnormal" >> /lib/systemd/system/etcd.service
-echo "LimitNOFILE=65536" >> /lib/systemd/system/etcd.service
-echo " " >> /lib/systemd/system/etcd.service
-echo "[Install]" >> /lib/systemd/system/etcd.service
-echo "WantedBy=multi-user.target" >> /lib/systemd/system/etcd.service
-echo "Alias=etcd2.service" >> /lib/systemd/system/etcd.service
+
+echo "${CPU_ARCH}"
+if [ "$CPU_ARCH" = "arm64" ]; then
+    wget https://github.com/etcd-io/etcd/releases/download/v3.4.1/etcd-v3.4.1-linux-arm64.tar.gz
+    tar -xvf etcd-v3.4.1-linux-arm64.tar.gz
+    sudo cp etcd-v3.4.1-linux-arm64/etcd* /usr/bin/
+    sudo groupadd --system etcd
+    sudo useradd --home-dir "/var/lib/etcd" \
+            --system \
+            --shell /bin/false \
+            -g etcd \
+            etcd
+    sudo mkdir -p /etc/etcd
+    sudo chown etcd:etcd /etc/etcd
+    sudo mkdir -p /var/lib/etcd
+    sudo chown etcd:etcd /var/lib/etcd
+    touch /etc/etcd/etcd.conf.yml
+    echo "name: ${CONTROLLER_HOST}" >> /etc/etcd/etcd.conf.yml
+    echo "data-dir: /var/lib/etcd" >> /etc/etcd/etcd.conf.yml
+    echo "initial-cluster-state: 'new'" >> /etc/etcd/etcd.conf.yml
+    echo "initial-cluster-token: 'etcd-cluster-01'" >> /etc/etcd/etcd.conf.yml
+    echo "initial-cluster: ${CONTROLLER_HOST}=http://${SET_IP}:2380" >> /etc/etcd/etcd.conf.yml
+    echo "initial-advertise-peer-urls: http://${SET_IP}:2380" >> /etc/etcd/etcd.conf.yml
+    echo "advertise-client-urls: http://${SET_IP}:2379" >> /etc/etcd/etcd.conf.yml
+    echo "listen-peer-urls: http://0.0.0.0:2380" >> /etc/etcd/etcd.conf.yml
+    echo "listen-client-urls: http://${SET_IP}:2379" >> /etc/etcd/etcd.conf.yml
+    touch /lib/systemd/system/etcd.service
+    echo "[Unit]" >> /lib/systemd/system/etcd.service
+    echo "Description=etcd - highly-available key value store">> /lib/systemd/system/etcd.service
+    echo "Documentation=https://github.com/coreos/etcd" >> /lib/systemd/system/etcd.service
+    echo "Documentation=man:etcd" >> /lib/systemd/system/etcd.service
+    echo "After=network.target" >> /lib/systemd/system/etcd.service
+    echo "Wants=network-online.target" >> /lib/systemd/system/etcd.service
+    echo " " >> /lib/systemd/system/etcd.service
+    echo "[Service]" >> /lib/systemd/system/etcd.service
+    echo "Environment=DAEMON_ARGS=" >> /lib/systemd/system/etcd.service
+    echo "Environment=ETCD_NAME=%H" >> /lib/systemd/system/etcd.service
+    echo "Environment=ETCD_DATA_DIR=/vara/lib/etcd/default" >> /lib/systemd/system/etcd.service
+    echo "Environment=\"ETCD_UNSUPPORTED_ARCH=arm64\"" >> /lib/systemd/system/etcd.service
+    echo "EnvironmentFile=-/etc/default/%p" >> /lib/systemd/system/etcd.service
+    echo "Type=notify" >> /lib/systemd/system/etcd.service
+    echo "User=etcd" >> /lib/systemd/system/etcd.service
+    echo "PermissionsStartOnly=true" >> /lib/systemd/system/etcd.service
+    echo "ExecStart=/usr/bin/etcd --config-file /etc/etcd/etcd.conf.yml" >> /lib/systemd/system/etcd.service
+    echo "Restart=on-abnormal" >> /lib/systemd/system/etcd.service
+    echo "LimitNOFILE=65536" >> /lib/systemd/system/etcd.service
+    echo " " >> /lib/systemd/system/etcd.service
+    echo "[Install]" >> /lib/systemd/system/etcd.service
+    echo "WantedBy=multi-user.target" >> /lib/systemd/system/etcd.service
+    echo "Alias=etcd2.service" >> /lib/systemd/system/etcd.service
+else
+    apt install etcd -y
+    echo -e "ETCD_NAME=\"${CONTROLLER_HOST}\"" >> /etc/default/etcd 
+    echo -e "ETCD_DATA_DIR=\"/var/lib/etcd\"" >> /etc/default/etcd 
+    echo -e "ETCD_INITIAL_CLUSTER_STATE=\"new\"" >> /etc/default/etcd 
+    echo -e "ETCD_INITIAL_CLUSTER_TOKEN=\"etcd-cluster-01\"" >> /etc/default/etcd 
+    echo -e "ETCD_INITIAL_CLUSTER=\"controller=http://${SET_IP}:2380\"" >> /etc/default/etcd 
+    echo -e "ETCD_INITIAL_ADVERTISE_PEER_URLS=\"http://${SET_IP}:2380\"" >> /etc/default/etcd 
+    echo -e "ETCD_ADVERTISE_CLIENT_URLS=\"http://${SET_IP}:2379\"" >> /etc/default/etcd 
+    echo -e "ETCD_LISTEN_PEER_URLS=\"http://0.0.0.0:2380\"" >> /etc/default/etcd 
+    echo -e "ETCD_LISTEN_CLIENT_URLS=\"http://${SET_IP}:2379\"" >> /etc/default/etcd 
+fi
 sync
 sudo systemctl daemon-reload
 sudo systemctl enable etcd
