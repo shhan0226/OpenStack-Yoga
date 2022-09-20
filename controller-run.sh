@@ -15,7 +15,7 @@ read -p "Do you want to input ?? {yes|no|ENTER=no}" CHECKER_O_
 if [ "$CHECKER_O_" = "yes" ]; then
     read -p "Input CONTROLLER HOSTNAME: " CONTROLLER_HOSTv
     read -p "Input COMPUTE HOSTNAME: " CONTROLLER_HOSTv
-    read -p "Input Contorller IP: (ex.192.168.0.2) " SET_IPv
+    read -p "Input Controller IP: (ex.192.168.0.2) " SET_IPv
     read -p "Input Compute1 IP: (ex.192.168.0.3) " SET_IP2v
     read -p "Input the allow IP (ex 192.168.0.0/24): " SET_IP_ALLOWv
     read -p "Input INTERFACE_NAME: " INTERFACE_NAME_v
@@ -49,39 +49,39 @@ echo "... set!!"
 
 # INSTALL START
 echo "1. Install Controller Setting ..."
-source ./Contorller/controller-setting.sh
+source ./Controller/controller-setting.sh
 echo "2. Install Keystone ..."
-#source ./Contorller/keystone.sh
+#source ./Controller/keystone.sh
 echo "3. Install Glance ..."
-#source ./Contorller/glance.sh
+#source ./Controller/glance.sh
 echo "4. Install Placement ..."
-#source ./Contorller/placement.sh
+#source ./Controller/placement.sh
 echo "5. Install Nova ..."
-#source ./Contorller/nova.sh
+#source ./Controller/nova.sh
 echo "Compelete, Nova!!"
 read -p "Is Compute Node installed? {yes|no|ENTER=yes} :" CHECKER_Node
 if [ "$CHECKER_Node" = "no" ]; then
     #echo "6. No Check Compute Node!!"
 else
     echo "6. Check Compute Node!!"
-    #source ./Contorller/nova_check.sh    
+    #source ./Controller/nova_check.sh    
 fi
 echo "7. Install Neutron ..."
 read -p "Is OVS installed? {yes|no|ENTER=no} :" CHECKER_OVS
 if [ "$CHECKER_OVS" = "yes" ]; then
     echo "OVS-Neutorn!!"
-    #source ./Contorller/neutron-ovs.sh
+    #source ./Controller/neutron-ovs.sh
 else
     echo "Neutorn!!"
-    #source ./Contorller/neutron.sh
+    #source ./Controller/neutron.sh
 fi
 echo "8. Install Horizon ..."
-#source ./Contorller/horizon.sh
+#source ./Controller/horizon.sh
 
 echo "9. Floating IP port forwarding..."
 read -p "SET PORT FORWARDING? {yes|no|ENTER=no} :" CHECKER_FORWARDING
 if [ "$CHECKER_FORWARDING" = "yes" ]; then
-		#source ./Contorller/floating_ip_port_forwarding.sh
+		#source ./Controller/floating_ip_port_forwarding.sh
 else
 		echo "Done..."
 fi
