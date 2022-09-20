@@ -49,7 +49,7 @@ else
 fi
 
 echo "8. Install Horizon ..."
-#source ./Controller/horizon.sh
+source ./Controller/horizon.sh
 
 echo "9. Floating IP port forwarding..."
 read -p "SET PORT FORWARDING? {yes|no|ENTER=no} :" CHECKER_FORWARDING
