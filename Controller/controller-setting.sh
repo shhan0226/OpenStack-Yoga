@@ -29,7 +29,6 @@ echo "Set IP ...."
 sed -i "s/127.0.1.1/\#127.0.1.1/" /etc/hosts
 echo "$SET_IP $CONTROLLER_HOST" >> /etc/hosts
 echo "$SET_IP2 $COMPUTE_HOST" >> /etc/hosts
-sudo hostnamectl set-hostname ${CONTROLLER_HOST}
 sync
 
 

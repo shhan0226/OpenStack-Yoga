@@ -18,21 +18,22 @@ echo "... set!!"
 echo "1. Install Controller Setting ..."
 source ./Controller/controller-setting.sh
 echo "2. Install Keystone ..."
-#source ./Controller/keystone.sh
+source ./Controller/keystone.sh
 echo "3. Install Glance ..."
 #source ./Controller/glance.sh
 echo "4. Install Placement ..."
 #source ./Controller/placement.sh
 echo "5. Install Nova ..."
 #source ./Controller/nova.sh
-echo "Compelete, Nova!!"
+
 read -p "Is Compute Node installed? {yes|no|ENTER=yes} :" CHECKER_Node
 if [ "$CHECKER_Node" = "no" ]; then
-    #echo "6. No Check Compute Node!!"
+    echo "6. No Check Compute Node!!"
 else
     echo "6. Check Compute Node!!"
     #source ./Controller/nova_check.sh    
 fi
+
 echo "7. Install Neutron ..."
 read -p "Is OVS installed? {yes|no|ENTER=no} :" CHECKER_OVS
 if [ "$CHECKER_OVS" = "yes" ]; then
