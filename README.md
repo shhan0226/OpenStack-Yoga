@@ -1,5 +1,5 @@
 # OpenStack-Yoga
-- This is an OpenStack:Yoga installation script.
+- This is an OpenStack-Yoga installation script.
 
 ## Prerequisites
 - It is based on installing OpenStack on two servers, Controller Node and Compute Node.
