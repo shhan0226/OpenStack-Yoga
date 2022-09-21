@@ -48,12 +48,15 @@
 
 ## BUG Fix
 - bug.1  
-  ```
-  
-  ```
-
-- bug.1.sol
-  ```
-  cd OpenStack-Yoga
-  sh fix.sh
-  ```
+  - Warning Messages
+    ```
+    /usr/lib/python3/dist-packages/secretstorage/dhcrypto.py:15: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
+    from cryptography.utils import int_from_bytes
+    /usr/lib/python3/dist-packages/secretstorage/util.py:19: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
+    from cryptography.utils import int_from_bytes
+    ```
+  - Sol
+    ```
+    cd OpenStack-Yoga
+    sh fix.sh
+    ```
