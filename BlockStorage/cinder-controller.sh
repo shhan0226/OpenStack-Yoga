@@ -15,7 +15,7 @@ fi
 ##################################
 # auth
 ##################################
-. admin-openrc
+source ../set.conf
 echo "$CONTROLLER_HOST"
 echo "$SET_IP"
 echo "$SET_IP2"
@@ -26,41 +26,25 @@ echo "$CPU_ARCH"
 echo "... set!!"
 
 
-
 ##################################
 # Cinder-Controller
 ##################################
 echo "Cinder Controller!!"
-
-
-
-##################################
-# Controller node
-##################################
-echo "[Prerequisites]"
 
 echo "Cinder CREATE DB ..."
 mysql -e "CREATE DATABASE cinder;"
 mysql -e "GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' IDENTIFIED BY '${STACK_PASSWD}';"
 mysql -e "GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY '${STACK_PASSWD}';"
 mysql -e "FLUSH PRIVILEGES;"
-
 echo "Cinder CREATE SERVICE ..."
-. admin-openrc
-
+. ../admin-openrc
 openstack user create --domain default --password ${STACK_PASSWD} cinder
 openstack role add --project service --user cinder admin
-
 openstack service create --name cinderv3 --description "OpenStack Block Storage" volumev3
-
 echo "Create the Block Storage service API endpoints:"
 openstack endpoint create --region RegionOne volumev3 public http://${SET_IP}:8776/v3/%\(project_id\)s
 openstack endpoint create --region RegionOne volumev3 internal http://${SET_IP}:8776/v3/%\(project_id\)s
 openstack endpoint create --region RegionOne volumev3 admin http://${SET_IP}:8776/v3/%\(project_id\)s
-
-
-echo "[Install and configure components]"
-
 echo "Install the Cinder packages..."
 apt install -y cinder-api cinder-scheduler
 crudini --set /etc/cinder/cinder.conf database connection mysql+pymysql://cinder:${STACK_PASSWD}@${SET_IP}/cinder
@@ -77,13 +61,10 @@ crudini --set /etc/cinder/cinder.conf keystone_authtoken username cinder
 crudini --set /etc/cinder/cinder.conf keystone_authtoken password ${STACK_PASSWD}
 crudini --set /etc/cinder/cinder.conf DEFAULT my_ip ${SET_IP}
 crudini --set /etc/cinder/cinder.conf oslo_concurrency lock_path /var/lib/cinder/tmp
-
 echo "Cinder Reg. DB ..."
 su -s /bin/sh -c "cinder-manage db sync" cinder
-
-echo "[Configure Compute to use Block Storage]"
+echo "Configure Compute to use Block Storage ..."
 crudini --set /etc/nova/nova.conf cinder os_region_name RegionOne
-
 echo "Cinder Verify operation ..."
 service nova-api restart
 service cinder-scheduler restart

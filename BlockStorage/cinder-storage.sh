@@ -12,25 +12,10 @@ else
 	exit 100
 fi
 
-##################################
-# auth
-##################################
-. admin-openrc
-echo "$CONTROLLER_HOST"
-echo "$SET_IP"
-echo "$SET_IP2"
-echo "$SET_IP_ALLOW"
-echo "$INTERFACE_NAME_"
-echo "$STACK_PASSWD"
-echo "$CPU_ARCH"
-echo "... set!!"
-
-
 
 ##################################
-# Cinder-Storage
+# Format Disk
 ##################################
-echo "Cinder Storage !!"
 
 fdisk -l
 read -p "Do you Run fdisk? ?? {yen|no|ENTER=no} :" CHECKER_fdisk
@@ -46,18 +31,67 @@ else
     echo "> n > p > 1 > enter > 최대m"
     echo "> t > 8e > w"
     echo "lsblk"
+    echo "apt install lvm2 thin-provisioning-tools"
+    echo "pvcreate /dev/sdX1"
+    echo "pvdisplay"
+    echo "vgcreate cinder-volumes /dev/sdX"
+    echo "vgdisplay"
+    echo "vim /etc/lvm/lvm.conf"
+    echo "devices {"
+    echo "        filter = [ "a/sdX1/", "r/.*/"] "
     exit 100
 fi
 
+
 ##################################
-# Storage node
+# auth
 ##################################
-echo "[Prerequisites]"
+source ../set.conf
+echo "$CONTROLLER_HOST"
+echo "$SET_IP"
+echo "$SET_IP2"
+echo "$SET_IP_ALLOW"
+echo "$INTERFACE_NAME_"
+echo "$STACK_PASSWD"
+echo "$CPU_ARCH"
+echo "... set!!"
 
-apt install lvm2 thin-provisioning-tools
 
-pvcreate /dev/sd${CHECKER_SDX}1
-pvdisplay
+##################################
+# Cinder-Storage
+##################################
+echo "Cinder Storage!!"
+apt install -y cinder-volume tgt
+crudini --set /etc/cinder/cinder.conf database connection mysql+pymysql://cinder:${STACK_PASSWD}@${SET_IP}/cinder
+crudini --set /etc/cinder/cinder.conf DEFAULT transport_url rabbit://openstack:${STACK_PASSWD}@${SET_IP}
+crudini --set /etc/cinder/cinder.conf DEFAULT auth_strategy keystone
+crudini --set /etc/cinder/cinder.conf keystone_authtoken www_authenticate_uri http://${SET_IP}:5000
+crudini --set /etc/cinder/cinder.conf keystone_authtoken auth_url http://${SET_IP}:5000
+crudini --set /etc/cinder/cinder.conf keystone_authtoken memcached_servers ${SET_IP}:11211
+crudini --set /etc/cinder/cinder.conf keystone_authtoken auth_type password
+crudini --set /etc/cinder/cinder.conf keystone_authtoken project_domain_name default
+crudini --set /etc/cinder/cinder.conf keystone_authtoken user_domain_name default
+crudini --set /etc/cinder/cinder.conf keystone_authtoken project_name service
+crudini --set /etc/cinder/cinder.conf keystone_authtoken username cinder
+crudini --set /etc/cinder/cinder.conf keystone_authtoken password ${STACK_PASSWD}
+crudini --set /etc/cinder/cinder.conf DEFAULT my_ip ${SET_IP}
+crudini --set /etc/cinder/cinder.conf lvm volume_driver cinder.volume.drivers.lvm.LVMVolumeDriver
+crudini --set /etc/cinder/cinder.conf lvm volume_group cinder-volumes
+crudini --set /etc/cinder/cinder.conf lvm target_protocol iscsi
+crudini --set /etc/cinder/cinder.conf lvm target_helper tgtadm
+crudini --set /etc/cinder/cinder.conf DEFAULT enabled_backends lvm 
+crudini --set /etc/cinder/cinder.conf DEFAULT glance_api_servers http://${SET_IP}:9292
+crudini --set /etc/cinder/cinder.conf oslo_concurrency lock_path /var/lib/cinder/tmp
+service tgt restart
+service cinder-volume restart
 
-vgcreate cinder-volumes /dev/sd${CHECKER_SDX}1
-vgdisplay
+# backup service
+apt install cinder-backup
+crudini --set /etc/cinder/cinder.conf DEFAULT backup_driver cinder.backup.drivers.swift.SwiftBackupDriver
+crudini --set /etc/cinder/cinder.conf DEFAULT backup_swift_url ${SET_IP}
+openstack catalog show object-store
+service cinder-backup restart
+
+# Verify Cinder operation
+systemctl restart iscsid
+openstack volume service list
