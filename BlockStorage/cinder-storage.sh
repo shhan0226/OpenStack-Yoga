@@ -21,13 +21,14 @@ fdisk -l
 read -p "Do you Run fdisk? ?? {yen|no|ENTER=no} :" CHECKER_fdisk
 if [ "$CHECKER_fdisk" = "yes" ]; then
     echo "good !!"    
-    read -p "Inpute the X ?? {b|c|ENTER=b} :" CHECKER_SDX
+    read -p "Inpute the X(sdX) ?? {b|c|ENTER=b} :" CHECKER_SDX
     lsblk
     partprobe -s
     partprobe /dev/sd${CHECKER_SDX}1
 else
+    echo "  "
     echo "---please check the your disk---"
-    echo "fdisk /dev/sdb"
+    echo "fdisk /dev/sdX"
     echo "> n > p > 1 > enter > 최대m"
     echo "> t > 8e > w"
     echo "lsblk"
@@ -37,6 +38,7 @@ else
     echo "vgcreate cinder-volumes /dev/sdX"
     echo "vgdisplay"
     echo "vim /etc/lvm/lvm.conf"
+    echo ">"
     echo "devices {"
     echo "        filter = [ "a/sdX1/", "r/.*/"] "
     exit 100
