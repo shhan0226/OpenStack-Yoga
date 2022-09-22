@@ -91,4 +91,5 @@ service cinder-backup restart
 # Verify Cinder operation
 ##################
 systemctl restart iscsid
+lsblk
 # openstack volume service list
