@@ -1,13 +1,9 @@
 # OpenStack-Yoga
-- This is an OpenStack:Yoga installation script.
-
-</br>
+- This is an OpenStack-Yoga installation script.
 
 ## Prerequisites
 - It is based on installing OpenStack on two servers, Controller Node and Compute Node.
 - The OS of each node is ubuntu20.04.
-
-</br>
 
 ## Configure components
 - Before you install and configure the inpute values.
@@ -26,8 +22,6 @@
   ...
   ```
 
-</br>
-
 ## Installation
 
 ### Controller Node
@@ -43,8 +37,6 @@
   cd OpenStack-Yoga
   source compute-run.sh
   ```
-
-</br>
 
 ## BUG Fix
 - bug.1  
