@@ -16,9 +16,10 @@ fi
 ##################################
 # Format Disk
 ##################################
-
+apt install lvm2 thin-provisioning-tools
 fdisk -l
-read -p "Do you Run fdisk? ?? {yen|no|ENTER=no} :" CHECKER_fdisk
+
+read -p "Do you Run fdisk? ?? {yes|no|ENTER=no} :" CHECKER_fdisk
 if [ "$CHECKER_fdisk" = "yes" ]; then
     echo "good !!"    
     read -p "Inpute the X(sdX) ?? {b|c|ENTER=b} :" CHECKER_SDX
@@ -32,10 +33,9 @@ else
     echo "> n > p > 1 > enter > 최대m"
     echo "> t > 8e > w"
     echo "lsblk"
-    echo "apt install lvm2 thin-provisioning-tools"
     echo "pvcreate /dev/sdX1"
     echo "pvdisplay"
-    echo "vgcreate cinder-volumes /dev/sdX"
+    echo "vgcreate cinder-volumes /dev/sdX1"
     echo "vgdisplay"
     echo "vim /etc/lvm/lvm.conf"
     echo ">"
@@ -44,13 +44,11 @@ else
     exit 100
 fi
 
-
 ##################################
 # auth
 ##################################
 source ../set.conf
 echo "... set!!"
-
 
 ##################################
 # Cinder-Storage
@@ -80,13 +78,17 @@ crudini --set /etc/cinder/cinder.conf oslo_concurrency lock_path /var/lib/cinder
 service tgt restart
 service cinder-volume restart
 
+##################
 # backup service
+##################
 apt install cinder-backup
 crudini --set /etc/cinder/cinder.conf DEFAULT backup_driver cinder.backup.drivers.swift.SwiftBackupDriver
 crudini --set /etc/cinder/cinder.conf DEFAULT backup_swift_url ${SET_IP}
-openstack catalog show object-store
+# openstack catalog show object-store
 service cinder-backup restart
 
+##################
 # Verify Cinder operation
+##################
 systemctl restart iscsid
-openstack volume service list
+# openstack volume service list
