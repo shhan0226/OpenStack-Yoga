@@ -12,6 +12,11 @@ else
 	exit 100
 fi
 
+##################################
+# auth
+##################################
+source ../set.conf
+echo "... set!!"
 
 ##################################
 # Format Disk
@@ -25,8 +30,8 @@ if [ "$CHECKER_fdisk" = "yes" ]; then
     read -p "Inpute the X(sdX) ?? {b|c|ENTER=b} :" CHECKER_SDX
     lsblk
     partprobe -s
-    partprobe /dev/sd${CHECKER_SDX}1
-    lsblk
+    partprobe /dev/sd${CHECKER_SDX}1 
+    lsblk   
 else
     echo "  "
     echo "---please check the your disk---"
@@ -44,12 +49,6 @@ else
     echo "        filter = [ \"a/sdX1/\", \"r/.*/\"] "
     exit 100
 fi
-
-##################################
-# auth
-##################################
-source ../set.conf
-echo "... set!!"
 
 ##################################
 # Cinder-Storage
