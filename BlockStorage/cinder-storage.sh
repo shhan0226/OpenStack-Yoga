@@ -20,7 +20,7 @@ fi
 fdisk -l
 read -p "Do you Run fdisk? ?? {yen|no|ENTER=no} :" CHECKER_fdisk
 if [ "$CHECKER_fdisk" = "yes" ]; then
-    echo "good !!"
+    echo "good !!"    
     read -p "Inpute the X ?? {b|c|ENTER=b} :" CHECKER_SDX
     lsblk
     partprobe -s
@@ -47,13 +47,6 @@ fi
 # auth
 ##################################
 source ../set.conf
-echo "$CONTROLLER_HOST"
-echo "$SET_IP"
-echo "$SET_IP2"
-echo "$SET_IP_ALLOW"
-echo "$INTERFACE_NAME_"
-echo "$STACK_PASSWD"
-echo "$CPU_ARCH"
 echo "... set!!"
 
 

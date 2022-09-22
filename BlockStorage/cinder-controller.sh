@@ -16,13 +16,6 @@ fi
 # auth
 ##################################
 source ../set.conf
-echo "$CONTROLLER_HOST"
-echo "$SET_IP"
-echo "$SET_IP2"
-echo "$SET_IP_ALLOW"
-echo "$INTERFACE_NAME_"
-echo "$STACK_PASSWD"
-echo "$CPU_ARCH"
 echo "... set!!"
 
 
