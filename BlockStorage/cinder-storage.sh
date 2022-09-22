@@ -33,16 +33,20 @@ if [ "$CHECKER_fdisk" = "yes" ]; then
     partprobe /dev/sd${CHECKER_SDX}1 
     lsblk   
 else
-    echo "  "
-    echo "---please check the your disk---"
+    echo " "
+    echo "---please check the fdisk---"
     echo "fdisk /dev/sdX"
     echo "> n > p > 1 > enter > 최대m"
     echo "> t > 8e > w"
+    echo " "
     echo "lsblk"
+    echo "---creative LVM---"
     echo "pvcreate /dev/sdX1"
     echo "pvdisplay"
     echo "vgcreate cinder-volumes /dev/sdX1"
     echo "vgdisplay"
+    echo " "
+    echo "---configure LVM---"
     echo "vim /etc/lvm/lvm.conf"
     echo ">"
     echo "devices {"
