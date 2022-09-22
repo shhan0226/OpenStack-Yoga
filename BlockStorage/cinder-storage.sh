@@ -26,6 +26,7 @@ if [ "$CHECKER_fdisk" = "yes" ]; then
     lsblk
     partprobe -s
     partprobe /dev/sd${CHECKER_SDX}1
+    lsblk
 else
     echo "  "
     echo "---please check the your disk---"
@@ -40,7 +41,7 @@ else
     echo "vim /etc/lvm/lvm.conf"
     echo ">"
     echo "devices {"
-    echo "        filter = [ "a/sdX1/", "r/.*/"] "
+    echo "        filter = [ \"a/sdX1/\", \"r/.*/\"] "
     exit 100
 fi
 
