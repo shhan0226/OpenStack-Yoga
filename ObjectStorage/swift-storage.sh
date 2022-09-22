@@ -27,6 +27,8 @@ echo "Swift Storage!!"
 # Prerequisites
 apt-get install -y xfsprogs rsync
 # Format Disk
+mkfs.xfs /dev/sdb
+mkfs.xfs /dev/sdc
 mkdir -p /srv/node/sdb
 mkdir -p /srv/node/sdc
 SDB_=$(blkid | awk '{ if($1=="/dev/sdb:") print $2}')
