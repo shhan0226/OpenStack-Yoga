@@ -1,5 +1,4 @@
 #!/bin/bash
-
 ##################################
 # Change root privileges.
 ##################################
@@ -18,8 +17,6 @@ if [ "$CHECKER_NO_" = "no" ]; then
 else
     echo "Keep Going!!"
 fi
-
-
 ##################################
 # config /etc/hosts
 ##################################
@@ -30,8 +27,6 @@ sed -i "s/127.0.1.1/\#127.0.1.1/" /etc/hosts
 echo "$SET_IP $CONTROLLER_HOST" >> /etc/hosts
 echo "$SET_IP2 $COMPUTE_HOST" >> /etc/hosts
 sync
-
-
 ##################################
 # SET Interface 
 ##################################
@@ -42,15 +37,11 @@ echo "iface $INTERFACE_NAME_ inet manual" >> /etc/network/interfaces
 echo "up ip link set dev $INTERFACE_NAME_ up" >> /etc/network/interfaces
 echo "down ip link set dev $INTERFACE_NAME_ down" >> /etc/network/interfaces
 sync
-
-
 ##################################
 # APT update & upgrade
 ##################################
 sudo apt update
 sudo apt upgrade -y
-
-
 ##################################
 # Install Package
 ##################################
@@ -58,7 +49,6 @@ sudo apt install -y git vim curl wget build-essential python3-pip python-is-pyth
 echo "Install simplejson ..."
 pip install simplejson
 pip install --ignore-installed simplejson
-
 echo "Install crudini ..."
 wget https://github.com/pixelb/crudini/releases/download/0.9.3/crudini-0.9.3.tar.gz
 tar xvf crudini-0.9.3.tar.gz
@@ -66,8 +56,6 @@ mv crudini-0.9.3/crudini /usr/bin/
 pip3 install iniparse
 rm -rf crudini-0.9.3 crudini-0.9.3.tar.gz
 sync
-
-
 ##################################
 # Install NTP
 ##################################
@@ -75,15 +63,11 @@ apt install -y chrony
 echo "server $CONTROLLER_HOST iburst" >> /etc/chrony/chrony.conf	
 echo "allow $SET_IP_ALLOW" >> /etc/chrony/chrony.conf
 sudo service chrony restart
-
-
 ##################################
 # Install Openstack Client
 ##################################
 add-apt-repository cloud-archive:yoga -y
 sudo apt install -y python3-openstackclient
-
-
 ##################################
 # SQL database for Ubuntu
 ##################################
@@ -97,28 +81,21 @@ crudini --set /etc/mysql/mariadb.conf.d/99-openstack.cnf mysqld character-set-se
 service mysql restart
 echo -e "\ny\ny\nstack\nstack\ny\ny\ny\ny" | mysql_secure_installation
 sync
-
-
 ##################################
 # Message queue for Ubuntu
 ##################################
 apt install -y rabbitmq-server
 rabbitmqctl add_user openstack $STACK_PASSWD
 rabbitmqctl set_permissions openstack ".*" ".*" ".*"
-
-
 ##################################
 # Memcached for Ubuntu
 ##################################
 apt install -y memcached python3-memcache
 sed -i s/127.0.0.1/${SET_IP}/ /etc/memcached.conf
 service memcached restart
-
-
 ##################################
 # Etcd for Ubuntu
 ##################################
-
 echo "${CPU_ARCH}"
 if [ "$CPU_ARCH" = "arm64" ]; then
     wget https://github.com/etcd-io/etcd/releases/download/v3.4.1/etcd-v3.4.1-linux-arm64.tar.gz
@@ -184,8 +161,6 @@ sync
 sudo systemctl daemon-reload
 sudo systemctl enable etcd
 sudo systemctl restart etcd	
-
-
 ##################################
 # Version Check
 ##################################

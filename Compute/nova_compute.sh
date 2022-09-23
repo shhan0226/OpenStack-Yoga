@@ -55,14 +55,9 @@ crudini --set /etc/nova/nova.conf placement user_domain_name Default
 crudini --set /etc/nova/nova.conf placement auth_url http://${SET_IP}:5000/v3
 crudini --set /etc/nova/nova.conf placement username placement
 crudini --set /etc/nova/nova.conf placement password ${STACK_PASSWD}
-
-
-echo "[Finalize installation]"
-
+# Finalize installation
 egrep -c '(vmx|svm)' /proc/cpuinfo
-
 echo "libvirt ..."
-
 echo "${CPU_ARCH}"
 if [ "$CPU_ARCH" = "arm64" ]; then
     apt-get install qemu-kvm -y
@@ -79,13 +74,11 @@ else
     service nova-compute restart
 fi
 
-
-echo "[Add the compute node to the cell database]"
+# Add the compute node to the cell database
 . admin-openrc
  openstack compute service list --service nova-compute
 su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
-
-echo "discover_hosts..."
+# discover_hosts
 crudini --set /etc/nova/nova.conf scheduler discover_hosts_in_cells_interval 300
 
 

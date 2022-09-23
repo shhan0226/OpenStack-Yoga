@@ -17,9 +17,6 @@ fi
 ##################################
 source ../set.conf
 echo "... set!!"
-
-
-
 ##################################
 # Swift-Storage
 ##################################
@@ -193,3 +190,4 @@ swift-object
 #swift-init all restart
 . ../admin-openrc
 swift stat
+echo "SWIFT STORAGE INSTALLED ... END"

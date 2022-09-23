@@ -11,19 +11,15 @@ else
     echo "It's not a root account."
 	  exit 100
 fi
-
 ##################################
 # auth
 ##################################
 source ../set.conf
 echo "... set!!"
-
-
 ##################################
 # Swift-Controller
 ##################################
 echo "Swift Controller!!"
-
 . ../admin-openrc
 openstack user create --domain default --password ${STACK_PASSWD} swift
 openstack role add --project service --user swift admin
@@ -34,10 +30,8 @@ openstack endpoint create --region RegionOne \
   object-store internal http://${SET_IP}:8080/v1/AUTH_%\(project_id\)s
 openstack endpoint create --region RegionOne \
   object-store admin http://${SET_IP}:8080/v1
-
 # install package
 apt-get install -y swift swift-proxy python3-swiftclient python3-keystoneclient python3-keystonemiddleware memcached
-
 # proxy-server
 curl -o /etc/swift/proxy-server.conf https://opendev.org/openstack/swift/raw/branch/stable/xena/etc/proxy-server.conf-sample
 crudini --set /etc/swift/proxy-server.conf DEFAULT bind_port 8080
@@ -84,4 +78,4 @@ crudini --set /etc/swift/proxy-server.conf filter:gatekeeper use egg:swift#gatek
 crudini --set /etc/swift/proxy-server.conf filter:container_sync use egg:swift#container_sync
 crudini --set /etc/swift/proxy-server.conf filter:xprofile use egg:swift#xprofile
 crudini --set /etc/swift/proxy-server.conf filter:versioned_writes use egg:swift#versioned_writes
-
+echo "SWIFT CONTROLLER INSTALLED ... END"

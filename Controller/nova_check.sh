@@ -11,8 +11,6 @@ else
     echo "It's not a root account."
 	exit 100
 fi
-
-
 ##################################
 # auth
 ##################################
@@ -25,8 +23,6 @@ echo "$INTERFACE_NAME_"
 echo "$STACK_PASSWD"
 echo "$CPU_ARCH"
 echo "... set!!"
-
-
 ##################################
 # nova check
 ##################################
@@ -34,10 +30,10 @@ sync
 openstack compute service list --service nova-compute
 su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
 crudini --set /etc/nova/nova.conf scheduler discover_hosts_in_cells_interval 300
-
-echo "NOVA Verify operation"
+# NOVA Verify operation
 . admin-openrc
 openstack compute service list
 openstack catalog list
 openstack image list
 nova-status upgrade check
+echo "NOVA CHECKED ... END"

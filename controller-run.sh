@@ -1,7 +1,6 @@
 #!/bin/bash
 
 echo "Install Controller for OpenStack ..."
-
 # INPUT DATA PRINT
 source set.conf
 echo "... set!!"

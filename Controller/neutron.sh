@@ -11,8 +11,6 @@ else
     echo "It's not a root account."
 	  exit 100
 fi
-
-
 ##################################
 # auth
 ##################################
@@ -25,48 +23,32 @@ echo "$INTERFACE_NAME_"
 echo "$STACK_PASSWD"
 echo "$CPU_ARCH"
 echo "... set!!"
-
-
 ##################################
 # Neutron
 ##################################
 echo "Neutron !!"
-
-echo "[Prerequisites]"
-
 mysql -e "CREATE DATABASE neutron;"
 mysql -e "GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY '${STACK_PASSWD}';"
 mysql -e "GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY '${STACK_PASSWD}';"
 mysql -e "FLUSH PRIVILEGES;"
-
-echo "Neutron CREATE DB ..."
+# Neutron CREATE DB
 . admin-openrc
 openstack user create --domain default --password ${STACK_PASSWD} neutron
 openstack role add --project service --user neutron admin
-
 openstack service create --name neutron \
   --description "OpenStack Networking" network
-
 openstack endpoint create --region RegionOne \
   network public http://${SET_IP}:9696
-
 openstack endpoint create --region RegionOne \
   network internal http://${SET_IP}:9696
-
 openstack endpoint create --region RegionOne \
   network admin http://${SET_IP}:9696  
-
-
-echo "[Configure networking options]"
-
-echo "[Networking Option 2: Self-service networks]"
-
-echo "Install the components..."
+# Configure networking options
+# Networking Option 2: Self-service networks
 apt install -y neutron-server neutron-plugin-ml2 \
   neutron-linuxbridge-agent neutron-l3-agent neutron-dhcp-agent \
   neutron-metadata-agent
-
-echo "Configure the server component"
+# Configure the server component
 crudini --set /etc/neutron/neutron.conf database connection mysql+pymysql://neutron:${STACK_PASSWD}@${SET_IP}/neutron
 crudini --set /etc/neutron/neutron.conf DEFAULT core_plugin ml2
 crudini --set /etc/neutron/neutron.conf DEFAULT service_plugins router
@@ -93,8 +75,7 @@ crudini --set /etc/neutron/neutron.conf nova project_name service
 crudini --set /etc/neutron/neutron.conf nova username nova
 crudini --set /etc/neutron/neutron.conf nova password ${STACK_PASSWD}
 crudini --set /etc/neutron/neutron.conf oslo_concurrency lock_path /var/lib/neutron/tmp
-
-echo "Configure the Modular Layer 2 (ML2) plug-in"
+# Configure the Modular Layer 2 (ML2) plug-in
 crudini --set /etc/neutron/plugins/ml2/ml2_conf.ini ml2 type_drivers flat,vlan,vxlan
 crudini --set /etc/neutron/plugins/ml2/ml2_conf.ini ml2 tenant_network_types vxlan
 crudini --set /etc/neutron/plugins/ml2/ml2_conf.ini ml2 mechanism_drivers linuxbridge,l2population
@@ -110,16 +91,13 @@ crudini --set /etc/neutron/plugins/ml2/linuxbridge_agent.ini securitygroup enabl
 crudini --set /etc/neutron/plugins/ml2/linuxbridge_agent.ini securitygroup firewall_driver neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 sysctl net.bridge.bridge-nf-call-iptables
 sysctl net.bridge.bridge-nf-call-ip6tables
-
-echo "Configure the layer-3 agent"
+# Configure the layer-3 agent
 crudini --set /etc/neutron/l3_agent.ini DEFAULT interface_driver linuxbridge
-
-echo "DHCP agent config"
+# DHCP agent config
 crudini --set /etc/neutron/dhcp_agent.ini DEFAULT interface_driver linuxbridge
 crudini --set /etc/neutron/dhcp_agent.ini DEFAULT dhcp_driver neutron.agent.linux.dhcp.Dnsmasq
 crudini --set /etc/neutron/dhcp_agent.ini DEFAULT enable_isolated_metadata true
-
-echo "Configure the metadata agent"
+# Configure the metadata agent
 crudini --set /etc/neutron/metadata_agent.ini DEFAULT nova_metadata_host ${SET_IP}
 crudini --set /etc/neutron/metadata_agent.ini DEFAULT metadata_proxy_shared_secret ${STACK_PASSWD}
 crudini --set /etc/nova/nova.conf neutron auth_url http://${SET_IP}:5000
@@ -132,15 +110,13 @@ crudini --set /etc/nova/nova.conf neutron username neutron
 crudini --set /etc/nova/nova.conf neutron password ${STACK_PASSWD}
 crudini --set /etc/nova/nova.conf neutron service_metadata_proxy true
 crudini --set /etc/nova/nova.conf neutron metadata_proxy_shared_secret ${STACK_PASSWD}
-
-echo "Neutron - Finalize installation"
-
+# Neutron - Finalize installation
 su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
-  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
-  
+  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron 
 service nova-api restart
 service neutron-server restart
 service neutron-linuxbridge-agent restart
 service neutron-dhcp-agent restart
 service neutron-metadata-agent restart
 service neutron-l3-agent restart
+echo "NEUTRON INSTALLED ... END"
