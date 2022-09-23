@@ -81,6 +81,7 @@ su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
 # discover_hosts
 crudini --set /etc/nova/nova.conf scheduler discover_hosts_in_cells_interval 300
 
+echo "NOVA COMPUTE INSTALLED ... END"
 
 
 

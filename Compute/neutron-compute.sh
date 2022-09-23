@@ -62,3 +62,4 @@ crudini --set /etc/nova/nova.conf neutron password ${STACK_PASSWD}
 # Finalize installation
 service nova-compute restart
 service neutron-linuxbridge-agent restart
+echo "NEUTRON COMPUTE INSTALLED ... END"

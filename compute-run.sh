@@ -35,4 +35,4 @@ else
     fi
 fi
 
-echo "END."
+echo "... THE END"

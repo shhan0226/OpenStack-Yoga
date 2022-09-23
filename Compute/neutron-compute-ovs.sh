@@ -65,3 +65,4 @@ crudini --set /etc/nova/nova.conf neutron password ${STACK_PASSWD}
 # Finalize installation
 service nova-compute restart
 service neutron-openvswitch-agent restart
+echo "NEUTRON OVS COMPUTE INSTALLED ... END"

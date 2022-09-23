@@ -47,7 +47,10 @@ read -p "SET PORT FORWARDING? {yes|no|ENTER=no} :" CHECKER_FORWARDING
 if [ "$CHECKER_FORWARDING" = "yes" ]; then
         echo "FORWARDING..."
 		source ./Controller/floating_ip_port_forwarding.sh
+        echo "FORWARDING INSTALLED ... END"
 else
 		echo "Done..."
 fi
+
+echo "... THE END"
 
