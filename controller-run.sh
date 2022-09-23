@@ -21,13 +21,8 @@ source ./Controller/placement.sh
 echo "5. Install Nova ..."
 source ./Controller/nova.sh
 
-read -p "Is Compute Node installed? {yes|no|ENTER=yes} :" CHECKER_Node
-if [ "$CHECKER_Node" = "no" ]; then
-    echo "6. No Check Compute Node!!"
-else
-    echo "6. Check Compute Node!!"
-    source ./Controller/nova_check.sh    
-fi
+echo "6. Check Compute Node ..."
+source ./Controller/nova_check.sh
 
 echo "7. Install Neutron ..."
 read -p "Is OVS installed? {yes|no|ENTER=no} :" CHECKER_OVS
@@ -53,4 +48,3 @@ else
 fi
 
 echo "... THE END"
-
