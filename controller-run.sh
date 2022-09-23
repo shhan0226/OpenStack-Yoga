@@ -7,6 +7,7 @@ echo "... set!!"
 # INSTALL START
 echo "1. Install Controller Setting ..."
 source ./Controller/controller-setting.sh
+sh ./fix.sh
 echo "2. Install Keystone ..."
 source ./Controller/keystone.sh
 echo "3. Install Glance ..."

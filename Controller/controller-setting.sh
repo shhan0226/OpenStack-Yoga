@@ -154,7 +154,6 @@ sync
 sudo systemctl daemon-reload
 sudo systemctl enable etcd
 sudo systemctl restart etcd	
-sh ../fix.sh
 ##################################
 # Version Check
 ##################################
