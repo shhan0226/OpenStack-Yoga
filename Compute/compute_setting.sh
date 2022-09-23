@@ -11,14 +11,6 @@ else
     echo "It's not a root account."
 	exit 100
 fi
-
-read -p "Do you want to set up? {yes|no|ENTER=yes} " CHECKER_NO_
-if [ "$CHECKER_NO_" = "no" ]; then
-    exit 100
-else
-    echo "Keep Going!!"
-fi
-
 # INPUT DATA PRINT
 echo "$CONTROLLER_HOST"
 echo "$COMPUTE_HOST"
@@ -29,8 +21,6 @@ echo "$INTERFACE_NAME_"
 echo "$STACK_PASSWD"
 echo "$CPU_ARCH"
 echo "... set!!"
-
-
 ##################################
 # config /etc/hosts
 ##################################
