@@ -34,12 +34,13 @@ if [ "$CHECKER_fdisk" = "yes" ]; then
     lsblk   
 else
     echo " "
+    echo "###################################################"
     echo "---please check the fdisk---"
+    echo "lsblk"
     echo "fdisk /dev/sdX"
     echo "> n > p > 1 > enter > 최대m"
     echo "> t > 8e > w"
-    echo " "
-    echo "lsblk"
+    echo " "    
     echo "---creative LVM---"
     echo "pvcreate /dev/sdX1"
     echo "pvdisplay"
@@ -51,6 +52,8 @@ else
     echo ">"
     echo "devices {"
     echo "        filter = [ \"a/sdX1/\", \"r/.*/\"] "
+    echo "###################################################"
+    echo " "
     exit 100
 fi
 
