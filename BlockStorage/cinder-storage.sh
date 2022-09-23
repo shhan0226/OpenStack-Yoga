@@ -27,11 +27,16 @@ fdisk -l
 read -p "Do you Run fdisk? ?? {yes|no|ENTER=no} :" CHECKER_fdisk
 if [ "$CHECKER_fdisk" = "yes" ]; then
     echo "good !!"    
-    read -p "Inpute the X(sdX) ?? {b|c|ENTER=b} :" CHECKER_SDX
+    read -p "Inpute the X(sdX) ?? {b|c|ENTER=b} :" SDX_
     lsblk
+    # creative LVM
+    pvcreate /dev/${SDX_}1
+    pvdisplay
+    vgcreate cinder-volumes /dev/${SDX_}1
+    vgdisplay
     partprobe -s
-    partprobe /dev/sd${CHECKER_SDX}1 
-    lsblk   
+    partprobe /dev/${SDX_}1    
+    lsblk    
 else
     echo " "
     echo "###################################################"
@@ -40,13 +45,7 @@ else
     echo "fdisk /dev/sdX"
     echo "> n > p > 1 > enter > 최대m"
     echo "> t > 8e > w"
-    echo " "    
-    echo "---creative LVM---"
-    echo "pvcreate /dev/sdX1"
-    echo "pvdisplay"
-    echo "vgcreate cinder-volumes /dev/sdX1"
-    echo "vgdisplay"
-    echo " "
+    echo " "        
     echo "---configure LVM---"
     echo "vim /etc/lvm/lvm.conf"
     echo ">"
