@@ -23,7 +23,9 @@ echo "... set!!"
 echo "Swift Storage!!"
 # Prerequisites
 apt-get install -y xfsprogs rsync
+
 # Format Disk
+lsblk
 read -p "Input no.1 /dev/sdX? {sdb|sdc|ENTER=sdb} :" SD1_
 echo $SD1_
 read -p "Input no.2 /dev/sdX? {sdb|sdc|ENTER=sdb} :" SD2_
