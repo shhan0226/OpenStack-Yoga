@@ -49,7 +49,7 @@ if [ "$CHECKER_FORWARDING" = "yes" ]; then
 		source ./Controller/floating_ip_port_forwarding.sh
         echo "FORWARDING INSTALLED ... END"
 else
-		echo "Done..."
+		echo "FORWARDING NO CONFIG ... END"
 fi
 
 echo "... THE END"
