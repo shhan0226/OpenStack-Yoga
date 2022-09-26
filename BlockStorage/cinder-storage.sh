@@ -91,7 +91,7 @@ service cinder-volume restart
 ##################
 apt install cinder-backup
 crudini --set /etc/cinder/cinder.conf DEFAULT backup_driver cinder.backup.drivers.swift.SwiftBackupDriver
-crudini --set /etc/cinder/cinder.conf DEFAULT backup_swift_url ${SET_IP}
+crudini --set /etc/cinder/cinder.conf DEFAULT backup_swift_url http://${SET_IP}:8080/v1
 # openstack catalog show object-store
 service cinder-backup restart
 
