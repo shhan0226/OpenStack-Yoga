@@ -10,7 +10,8 @@ source ./Compute/compute_setting.sh
 echo "2. Install Nova Compute ..."
 source ./Compute/nova_compute.sh
 echo "3. Install Neutron ..."
-read -p "Is OVS installed? {yes|no|ENTER=no} :" CHECKER_OVS
+#read -p "Is OVS installed? {yes|no|ENTER=no} :" CHECKER_OVS
+echo "Is OVS installed? $CHECKER_OVS "
 if [ "$CHECKER_OVS" = "yes" ]; then
     echo "OVS-Neutorn!!"
     source ./Compute/neutron-compute-ovs.sh

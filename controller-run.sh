@@ -19,7 +19,8 @@ source ./Controller/nova.sh
 echo "6. Check Compute Node ..."
 source ./Controller/nova_check.sh
 echo "7. Install Neutron ..."
-read -p "Is OVS installed? {yes|no|ENTER=no} :" CHECKER_OVS
+#read -p "Is OVS installed? {yes|no|ENTER=no} :" CHECKER_OVS
+echo "Is OVS installed? $CHECKER_OVS "
 if [ "$CHECKER_OVS" = "yes" ]; then
     echo "OVS-Neutorn!!"
     source ./Controller/neutron-ovs.sh
