@@ -31,7 +31,7 @@ mysql -e "GRANT ALL PRIVILEGES ON placement.* TO 'placement'@'localhost' IDENTIF
 mysql -e "GRANT ALL PRIVILEGES ON placement.* TO 'placement'@'%' IDENTIFIED BY '${STACK_PASSWD}';"
 mysql -e "FLUSH PRIVILEGES;"
 # Placement CREATE DB
-. amdin-openrc
+. admin-openrc
 openstack user create --domain default --password ${STACK_PASSWD} placement
 openstack role add --project service --user placement admin
 openstack service create --name placement \
