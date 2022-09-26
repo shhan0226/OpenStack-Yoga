@@ -81,5 +81,5 @@ chronyc sources
 ##################################
 # Install Openstack Client
 ##################################
-add-apt-repository cloud-archive:yoga -y
+add-apt-repository cloud-archive:${OPENSTACK_VER} -y
 sudo apt install python3-openstackclient -y

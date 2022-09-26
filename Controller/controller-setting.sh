@@ -59,7 +59,7 @@ sudo service chrony restart
 ##################################
 # Install Openstack Client
 ##################################
-add-apt-repository cloud-archive:yoga -y
+add-apt-repository cloud-archive:${OPENSTACK_VER} -y
 sudo apt install -y python3-openstackclient
 ##################################
 # SQL database for Ubuntu
