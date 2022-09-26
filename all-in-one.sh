@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "Install Controller for OpenStack ..."
+echo "Controller Node !!"
 source ./controller-run.sh
-echo "Install Compute for OpenStack ..."
+echo "Compute Node !!"
 source ./compute-run.sh
 echo "... THE END"
