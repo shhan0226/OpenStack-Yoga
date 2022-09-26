@@ -27,9 +27,9 @@ apt-get install -y xfsprogs rsync
 # Format Disk
 lsblk
 read -p "Input no.1 /dev/sdX? {sdb|sdc|ENTER=sdb} :" SD1_
-echo $SD1_
+echo ${SD1_}
 read -p "Input no.2 /dev/sdX? {sdb|sdc|ENTER=sdb} :" SD2_
-echo $SD2_
+echo ${SD2_}
 mkfs.xfs /dev/${SD1_}
 mkfs.xfs /dev/${SD2_}
 mkdir -p /srv/node/${SD1_}
@@ -39,7 +39,8 @@ SDC_=$(blkid | awk '{ if($1=="/dev/sdc:") print $2}')
 echo "${SDB_} /srv/node/sdb xfs noatime 0 2" >> /etc/fstab
 echo "${SDC_} /srv/node/sdc xfs noatime 0 2" >> /etc/fstab
 mount /srv/node/${SD1_}
-mount /srv/node/${SD1_}
+mount /srv/node/${SD2_}
+lsblk
 ##################################
 # rsync
 ##################################
