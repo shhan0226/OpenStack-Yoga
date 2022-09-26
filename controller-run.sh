@@ -39,4 +39,4 @@ if [ "$CHECKER_FORWARDING" = "yes" ]; then
 else
 		echo "FORWARDING NO CONFIG ... END"
 fi
-echo "... THE END"
+echo "CONTROLLER ... THE END"

@@ -19,4 +19,4 @@ else
     echo "Neutorn!!"
     source ./Compute/neutron-compute.sh        
 fi
-echo "... THE END"
+echo "COMPUTE ... THE END"
