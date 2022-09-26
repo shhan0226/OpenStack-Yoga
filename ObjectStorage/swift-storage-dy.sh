@@ -27,8 +27,10 @@ apt-get install -y xfsprogs rsync
 # Format Disk
 lsblk
 read -p "Input no.1 /dev/sdX? {sdb|sdc|ENTER=sdb} :" SD1_
+SD1_=${SD1_:-sdb}
 echo ${SD1_}
-read -p "Input no.2 /dev/sdX? {sdb|sdc|ENTER=sdb} :" SD2_
+read -p "Input no.2 /dev/sdX? {sdb|sdc|ENTER=sdc} :" SD2_
+SD2_=${SD2_:-sdc}
 echo ${SD2_}
 mkfs.xfs /dev/${SD1_}
 mkfs.xfs /dev/${SD2_}

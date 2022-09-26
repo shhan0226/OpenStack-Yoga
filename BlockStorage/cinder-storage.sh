@@ -26,9 +26,10 @@ fdisk -l
 
 read -p "Do you Run fdisk? ?? {yes|no|ENTER=no} :" CHECKER_fdisk
 if [ "$CHECKER_fdisk" = "yes" ]; then
-    echo "good !!"
-    SDX_="sdd"
-    read -p "Inpute the X(sdX) ?? {sdb|sdc|ENTER=sdd} :" SDX_
+    echo "good !!"    
+    read -p "Inpute the sdX ?? {sdb|sdc|ENTER=sdd} :" SDX_
+    SDX_=${SDX_:-sdd}
+    echo ${SDX_}
     lsblk
     # creative LVM
     pvcreate /dev/${SDX_}1
