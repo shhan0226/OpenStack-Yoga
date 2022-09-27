@@ -11,16 +11,6 @@ else
     echo "It's not a root account."
 	exit 100
 fi
-# INPUT DATA PRINT
-echo "$CONTROLLER_HOST"
-echo "$COMPUTE_HOST"
-echo "$SET_IP"
-echo "$SET_IP2"
-echo "$SET_IP_ALLOW"
-echo "$INTERFACE_NAME_"
-echo "$STACK_PASSWD"
-echo "$CPU_ARCH"
-echo "... set!!"
 ##################################
 # config /etc/hosts
 ##################################
@@ -31,8 +21,6 @@ sed -i "s/127.0.1.1/\#127.0.1.1/" /etc/hosts
 echo "$SET_IP $CONTROLLER_HOST" >> /etc/hosts
 echo "$SET_IP2 $COMPUTE_HOST" >> /etc/hosts
 sync
-
-
 ##################################
 # SET Interface 
 ##################################
@@ -43,15 +31,11 @@ echo "iface $INTERFACE_NAME_ inet manual" >> /etc/network/interfaces
 echo "up ip link set dev $INTERFACE_NAME_ up" >> /etc/network/interfaces
 echo "down ip link set dev $INTERFACE_NAME_ down" >> /etc/network/interfaces
 sync
-
-
 ##################################
 # APT update & upgrade
 ##################################
 sudo apt update
 sudo apt upgrade -y
-
-
 ##################################
 # Install Package
 ##################################
@@ -67,8 +51,6 @@ mv crudini-0.9.3/crudini /usr/bin/
 pip3 install iniparse
 rm -rf crudini-0.9.3 crudini-0.9.3.tar.gz
 sync
-
-
 ##################################
 # Install NTP
 ##################################
@@ -77,7 +59,6 @@ echo "server $CONTROLLER_HOST iburst" >> /etc/chrony/chrony.conf
 sudo service chrony restart
 chronyc sources
 chronyc sources
-
 ##################################
 # Install Openstack Client
 ##################################
