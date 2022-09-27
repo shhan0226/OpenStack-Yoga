@@ -24,7 +24,6 @@ echo "$CPU_ARCH"
 echo "$OPENSTACK_VER"
 echo "... set!!"
 
-
 ##################################
 # Neutron compute1
 ##################################
