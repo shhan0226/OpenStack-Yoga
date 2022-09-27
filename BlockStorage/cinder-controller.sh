@@ -58,6 +58,7 @@ crudini --set /etc/nova/nova.conf cinder os_region_name RegionOne
 service nova-api restart
 service cinder-scheduler restart
 service apache2 restart
+echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.conf
 echo "CINDER CONTROLLER INSTALLED ... END"
 
 
