@@ -22,6 +22,7 @@ echo "$SET_IP_ALLOW"
 echo "$INTERFACE_NAME_"
 echo "$STACK_PASSWD"
 echo "$CPU_ARCH"
+echo "$OPENSTACK_VER"
 echo "... set!!"
 ##################################
 # Horizon
