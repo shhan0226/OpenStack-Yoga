@@ -59,8 +59,8 @@ crudini --set /etc/rsyncd.conf account "write only" no
 crudini --set /etc/rsyncd.conf account "max connections" 25
 crudini --set /etc/rsyncd.conf account "lock file" /var/lock/account.lock
 crudini --set /etc/rsyncd.conf account list yes
-crudini --set /etc/rsyncd.conf account "incoming chmod" 0644
-crudini --set /etc/rsyncd.conf account "outgoing chmod" 0644
+#crudini --set /etc/rsyncd.conf account "incoming chmod" 0644
+#crudini --set /etc/rsyncd.conf account "outgoing chmod" 0644
 # container
 crudini --set /etc/rsyncd.conf container path /srv/node
 crudini --set /etc/rsyncd.conf container "read only" false
@@ -68,8 +68,8 @@ crudini --set /etc/rsyncd.conf container "write only" no
 crudini --set /etc/rsyncd.conf container "max connections" 25
 crudini --set /etc/rsyncd.conf container "lock file" /var/lock/account.lock
 crudini --set /etc/rsyncd.conf container list yes
-crudini --set /etc/rsyncd.conf container "incoming chmod" 0644
-crudini --set /etc/rsyncd.conf container "outgoing chmod" 0644
+#crudini --set /etc/rsyncd.conf container "incoming chmod" 0644
+#crudini --set /etc/rsyncd.conf container "outgoing chmod" 0644
 # object
 crudini --set /etc/rsyncd.conf object path /srv/node
 crudini --set /etc/rsyncd.conf object "read only" false
@@ -77,8 +77,8 @@ crudini --set /etc/rsyncd.conf object "write only" no
 crudini --set /etc/rsyncd.conf object "max connections" 25
 crudini --set /etc/rsyncd.conf object "lock file" /var/lock/account.lock
 crudini --set /etc/rsyncd.conf object list yes
-crudini --set /etc/rsyncd.conf object "incoming chmod" 0644
-crudini --set /etc/rsyncd.conf object "outgoing chmod" 0644
+#crudini --set /etc/rsyncd.conf object "incoming chmod" 0644
+#crudini --set /etc/rsyncd.conf object "outgoing chmod" 0644
 # swift_server
 # crudini --set /etc/rsyncd.conf swift_server path /etc/swift
 # crudini --set /etc/rsyncd.conf swift_server "read only" true
@@ -91,7 +91,6 @@ crudini --set /etc/rsyncd.conf object "outgoing chmod" 0644
 # /etc/default/rsync
 crudini --set /etc/default/rsync "" RSYNC_ENABLE true
 service rsync start
-
 ##################################
 # server config
 ##################################
@@ -137,11 +136,12 @@ mkdir -p /var/cache/swift
 chown -R root:swift /var/cache/swift
 chmod -R 775 /var/cache/swift
 
+
+
 ##################################
 # Rings
 ##################################
-# Controller node:
-
+## Controller node:
 # account
 swift-ring-builder /etc/swift/account.builder create 10 1 1
 swift-ring-builder /etc/swift/account.builder add --region 1 --zone 1 --ip ${SET_IP} --port 6202 --device sdb --weight 100 
@@ -161,10 +161,13 @@ swift-ring-builder /etc/swift/object.builder add --region 1 --zone 1 --ip ${SET_
 swift-ring-builder /etc/swift/object.builder
 swift-ring-builder /etc/swift/object.builder rebalance
 
+
+
 ##################################
 # Finalize installation
 ##################################
-# Controller node:
+
+## Controller node:
 # /etc/swift/internal-client.conf
 curl -o /etc/swift/internal-client.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/internal-client.conf-sample
 # /etc/swift/swift.conf
@@ -174,8 +177,11 @@ crudini --set /etc/swift/swift.conf swift-hash swift_hash_path_prefix hash_swift
 chown -R root:swift /etc/swift
 service memcached restart
 service swift-proxy restart
+# scp /etc/swift/swift.conf {스토리지 노드}:/etc/swift
+# chown -R root:swift /etc/swift
 
-# Storage node
+
+## Storage node
 # 서비스 실행
 systemctl enable rsync swift-account-auditor \
 swift-account-replicator \
