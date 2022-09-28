@@ -101,6 +101,8 @@ service cinder-backup restart
 systemctl restart iscsid
 service cinder-backup restart
 service cinder-volume restart
+systemctl restart cinder-scheduler
+systemctl restart cinder-backup
 lsblk
 # openstack volume service list
 echo "CINDER STORAGE INSTALLED ... END"
