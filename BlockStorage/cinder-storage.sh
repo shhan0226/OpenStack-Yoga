@@ -31,6 +31,7 @@ if [ "$CHECKER_fdisk" = "yes" ]; then
     SDX_=${SDX_:-sdd}
     echo ${SDX_}
     lsblk
+    sed -i'' -r -e "/devices/a\        filter = [ \"a/${SDX_}/\", \"r/.*/\"]/" /etc/lvm/lvm.conf
     # creative LVM
     pvcreate /dev/${SDX_}1
     pvdisplay
@@ -47,12 +48,7 @@ else
     echo "fdisk /dev/sdX"
     echo "> n > p > 1 > enter > 최대m"
     echo "> t > 8e > w"
-    echo " "        
-    echo "---configure LVM---"
-    echo "vim /etc/lvm/lvm.conf"
-    echo ">"
-    echo "devices {"
-    echo "        filter = [ \"a/sdX1/\", \"r/.*/\"] "
+    echo " "
     echo "###################################################"
     echo " "
     exit 100
