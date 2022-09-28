@@ -24,35 +24,34 @@ echo "... set!!"
 apt install lvm2 thin-provisioning-tools
 fdisk -l
 
-read -p "Do you Run fdisk? ?? {yes|no|ENTER=no} :" CHECKER_fdisk
-if [ "$CHECKER_fdisk" = "yes" ]; then
-    echo "good !!"    
-    read -p "Inpute the sdX ?? {sdb|sdc|ENTER=sdd} :" SDX_
-    SDX_=${SDX_:-sdd}
-    echo ${SDX_}
-    lsblk
-    sed -i'' -r -e "/devices \{/a\        filter = [ \"a/${SDX_}/\", \"r/.*/\"]" /etc/lvm/lvm.conf
-    # creative LVM
-    pvcreate /dev/${SDX_}1
-    pvdisplay
-    vgcreate cinder-volumes /dev/${SDX_}1
-    vgdisplay
-    partprobe -s
-    partprobe /dev/${SDX_}1    
-    lsblk    
-else
-    echo " "
-    echo "###################################################"
-    echo "---please check the fdisk---"
-    echo "lsblk"
-    echo "fdisk /dev/sdX"
-    echo "> n > p > 1 > enter > 최대m"
-    echo "> t > 8e > w"
-    echo " "
-    echo "###################################################"
-    echo " "
-    exit 100
-fi
+read -p "Inpute the sdX ?? {sdb|sdc|ENTER=sdd} :" SDX_
+SDX_=${SDX_:-sdd}
+echo ${SDX_}
+lsblk
+
+# fdisk setting
+fdisk /dev/${SDX_} <<EOF
+n
+p
+1
+
+
+t
+8e
+w
+EOF
+
+# lvm.conf
+sed -i'' -r -e "/devices \{/a\        filter = [ \"a/${SDX_}/\", \"r/.*/\"]" /etc/lvm/lvm.conf
+
+# creative LVM
+pvcreate /dev/${SDX_}1
+pvdisplay
+vgcreate cinder-volumes /dev/${SDX_}1
+vgdisplay
+partprobe -s
+partprobe /dev/${SDX_}1    
+lsblk    
 
 ##################################
 # Cinder-Storage
