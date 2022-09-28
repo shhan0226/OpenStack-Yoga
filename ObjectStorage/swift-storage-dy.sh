@@ -46,7 +46,7 @@ lsblk
 ##################################
 # rsync
 ##################################
-curl -o /etc/rsyncd.conf https://opendev.org/openstack/swift/raw/branch/stable/yoga/etc/rsyncd.conf-sample
+curl -o /etc/rsyncd.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/rsyncd.conf-sample
 crudini --set /etc/rsyncd.conf "" "pid file" /var/run/rsyncd.pid
 crudini --set /etc/rsyncd.conf "" "log file" /var/log/rsyncd.log
 crudini --set /etc/rsyncd.conf "" uid swift
@@ -80,14 +80,14 @@ crudini --set /etc/rsyncd.conf object list yes
 crudini --set /etc/rsyncd.conf object "incoming chmod" 0644
 crudini --set /etc/rsyncd.conf object "outgoing chmod" 0644
 # swift_server
-crudini --set /etc/rsyncd.conf swift_server path /etc/swift
-crudini --set /etc/rsyncd.conf swift_server "read only" true
-crudini --set /etc/rsyncd.conf swift_server "write only" no
-crudini --set /etc/rsyncd.conf swift_server list yes
-crudini --set /etc/rsyncd.conf swift_server "incoming chmod" 0644
-crudini --set /etc/rsyncd.conf swift_server "outgoing chmod" 0644
-crudini --set /etc/rsyncd.conf swift_server "max connections" 25
-crudini --set /etc/rsyncd.conf swift_server "lock file" /var/lock/account.lock
+# crudini --set /etc/rsyncd.conf swift_server path /etc/swift
+# crudini --set /etc/rsyncd.conf swift_server "read only" true
+# crudini --set /etc/rsyncd.conf swift_server "write only" no
+# crudini --set /etc/rsyncd.conf swift_server list yes
+# crudini --set /etc/rsyncd.conf swift_server "incoming chmod" 0644
+# crudini --set /etc/rsyncd.conf swift_server "outgoing chmod" 0644
+# crudini --set /etc/rsyncd.conf swift_server "max connections" 25
+# crudini --set /etc/rsyncd.conf swift_server "lock file" /var/lock/account.lock
 # /etc/default/rsync
 crudini --set /etc/default/rsync "" RSYNC_ENABLE true
 service rsync start
@@ -96,9 +96,9 @@ service rsync start
 # server config
 ##################################
 apt-get install swift swift-account swift-container swift-object xfsprogs -y
-curl -o /etc/swift/account-server.conf https://opendev.org/openstack/swift/raw/branch/stable/yoga/etc/account-server.conf-sample
-curl -o /etc/swift/container-server.conf https://opendev.org/openstack/swift/raw/branch/stable/yoga/etc/container-server.conf-sample
-curl -o /etc/swift/object-server.conf https://opendev.org/openstack/swift/raw/branch/stable/yoga/etc/object-server.conf-sample
+curl -o /etc/swift/account-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/account-server.conf-sample
+curl -o /etc/swift/container-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/container-server.conf-sample
+curl -o /etc/swift/object-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/object-server.conf-sample
 # /etc/swift/account-server.conf
 crudini --set /etc/swift/account-server.conf DEFAULT bind_ip ${SET_IP}
 crudini --set /etc/swift/account-server.conf DEFAULT bind_port 6202
@@ -162,15 +162,18 @@ swift-ring-builder /etc/swift/object.builder rebalance
 ##################################
 # Finalize installation
 ##################################
+# Controller node:
 # /etc/swift/internal-client.conf
-curl -o /etc/swift/internal-client.conf https://opendev.org/openstack/swift/raw/branch/stable/yoga/etc/internal-client.conf-sample
+curl -o /etc/swift/internal-client.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/internal-client.conf-sample
 # /etc/swift/swift.conf
-curl -o /etc/swift/swift.conf https://opendev.org/openstack/swift/raw/branch/stable/yoga/etc/swift.conf-sample
+curl -o /etc/swift/swift.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/swift.conf-sample
 crudini --set /etc/swift/swift.conf swift-hash swift_hash_path_suffix hash_swift_
 crudini --set /etc/swift/swift.conf swift-hash swift_hash_path_prefix hash_swift_
 chown -R root:swift /etc/swift
 service memcached restart
 service swift-proxy restart
+
+# Storage node
 # 서비스 실행
 systemctl enable rsync swift-account-auditor \
 swift-account-replicator \
