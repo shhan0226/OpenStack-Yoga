@@ -140,6 +140,8 @@ chmod -R 775 /var/cache/swift
 ##################################
 # Rings
 ##################################
+# Controller node:
+
 # account
 swift-ring-builder /etc/swift/account.builder create 10 1 1
 swift-ring-builder /etc/swift/account.builder add --region 1 --zone 1 --ip ${SET_IP} --port 6202 --device sdb --weight 100 
