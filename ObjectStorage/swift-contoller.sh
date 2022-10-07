@@ -31,7 +31,7 @@ openstack endpoint create --region RegionOne \
 openstack endpoint create --region RegionOne \
   object-store admin http://${SET_IP}:8080/v1
 # install package
-apt-get install -y swift swift-proxy python3-swiftclient python3-keystoneclient python3-keystonemiddleware memcached
+apt-get install -y swift swift-proxy python3-swiftclient python3-keystoneclient python3-keystonemiddleware memcached python3-memcache
 # proxy-server
 curl -o /etc/swift/proxy-server.conf https://opendev.org/openstack/swift/raw/branch/stable/xena/etc/proxy-server.conf-sample
 crudini --set /etc/swift/proxy-server.conf DEFAULT bind_port 8080
