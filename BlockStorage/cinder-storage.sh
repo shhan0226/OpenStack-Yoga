@@ -78,6 +78,7 @@ crudini --set /etc/cinder/cinder.conf lvm target_helper tgtadm
 crudini --set /etc/cinder/cinder.conf DEFAULT enabled_backends lvm 
 crudini --set /etc/cinder/cinder.conf DEFAULT glance_api_servers http://${SET_IP}:9292
 crudini --set /etc/cinder/cinder.conf oslo_concurrency lock_path /var/lib/cinder/tmp
+echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.conf
 service tgt restart
 service cinder-volume restart
 
