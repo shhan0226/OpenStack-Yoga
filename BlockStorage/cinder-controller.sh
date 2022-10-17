@@ -31,6 +31,7 @@ openstack user create --domain default --password ${STACK_PASSWD} cinder
 openstack role add --project service --user cinder admin
 openstack service create --name cinderv3 --description "OpenStack Block Storage" volumev3
 # Create the Block Storage service API endpoints
+. ../admin-openrc
 openstack endpoint create --region RegionOne volumev3 public http://${SET_IP}:8776/v3/%\(project_id\)s
 openstack endpoint create --region RegionOne volumev3 internal http://${SET_IP}:8776/v3/%\(project_id\)s
 openstack endpoint create --region RegionOne volumev3 admin http://${SET_IP}:8776/v3/%\(project_id\)s

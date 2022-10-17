@@ -10,6 +10,8 @@ source ./Controller/controller-setting.sh
 
 if [ "$CPU_ARCH" = "arm64" ]; then
     echo "This is ARM64"
+    pip3 install --upgrade sqlalchemy==1.4.13
+    sh ./fix.sh
 else    
     sh ./fix.sh    
 fi
