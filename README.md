@@ -1,5 +1,10 @@
 # OpenStack-Yoga
-- This is an OpenStack-Yoga installation script.
+Installation Script for OpenStack Yoga based on ARM Server (ubuntu20.04)
+
+## OpenStack installer
+
+ARM CPU Server-based manual installation method is written on [Wiki](https://github.com/shhan0226/Project-OpenStack/wiki).
+Here, a shell script is written based on the contents of the [Wiki](https://github.com/shhan0226/Project-OpenStack/wiki).
 
 ## Prerequisites
 - It is based on installing OpenStack on two servers, Controller Node and Compute Node.
