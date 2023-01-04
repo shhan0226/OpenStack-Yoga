@@ -46,6 +46,7 @@ keystone-manage bootstrap --bootstrap-password ${STACK_PASSWD} \
   --bootstrap-public-url http://${SET_IP}:5000/v3/ \
   --bootstrap-region-id RegionOne
 # Keystone - Apache HTTP server
+apt install -y apache2
 echo "ServerName ${SET_IP}" >> /etc/apache2/apache2.conf
 # Finalize the installation
 service apache2 restart
