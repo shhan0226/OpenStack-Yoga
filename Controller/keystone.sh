@@ -33,6 +33,7 @@ mysql -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIE
 mysql -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY '${STACK_PASSWD}';"
 mysql -e "FLUSH PRIVILEGES;"
 # Keystone Install
+apt install -y apache2
 apt install -y keystone
 crudini --set /etc/keystone/keystone.conf database connection mysql+pymysql://keystone:${STACK_PASSWD}@${SET_IP}/keystone
 crudini --set /etc/keystone/keystone.conf token provider fernet
@@ -46,7 +47,6 @@ keystone-manage bootstrap --bootstrap-password ${STACK_PASSWD} \
   --bootstrap-public-url http://${SET_IP}:5000/v3/ \
   --bootstrap-region-id RegionOne
 # Keystone - Apache HTTP server
-apt install -y apache2
 echo "ServerName ${SET_IP}" >> /etc/apache2/apache2.conf
 # Finalize the installation
 service apache2 restart
