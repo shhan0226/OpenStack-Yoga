@@ -97,10 +97,10 @@ openstack role add --project myproject --user myuser myrole
 # Keystone Verify operation
 unset OS_AUTH_URL OS_PASSWORD
 . admin-openrc
-openstack --os-auth-url http://controller:5000/v3 \
+openstack --os-auth-url http://${SET_IP}:5000/v3 \
 --os-project-domain-name Default --os-user-domain-name Default \
 --os-project-name admin --os-username admin --os-password=${STACK_PASSWD} token issue
-openstack --os-auth-url http://controller:5000/v3 \
+openstack --os-auth-url http://${SET_IP}:5000/v3 \
 --os-project-domain-name Default --os-user-domain-name Default \
 --os-project-name myproject --os-username myuser --os-password=${STACK_PASSWD} token issue
 ##################################
