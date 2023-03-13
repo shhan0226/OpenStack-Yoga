@@ -40,6 +40,10 @@ apt install -y cinder-api cinder-scheduler
 crudini --set /etc/cinder/cinder.conf database connection mysql+pymysql://cinder:${STACK_PASSWD}@${SET_IP}/cinder
 crudini --set /etc/cinder/cinder.conf DEFAULT transport_url rabbit://openstack:${STACK_PASSWD}@${SET_IP}
 crudini --set /etc/cinder/cinder.conf DEFAULT auth_strategy keystone
+crudini --set /etc/cinder/cinder.conf DEFAULT my_ip ${SET_IP}
+
+crudini --set /etc/cinder/cinder.conf DEFAULT iscsi_helper tgtadm
+
 crudini --set /etc/cinder/cinder.conf keystone_authtoken www_authenticate_uri http://${SET_IP}:5000
 crudini --set /etc/cinder/cinder.conf keystone_authtoken auth_url http://${SET_IP}:5000
 crudini --set /etc/cinder/cinder.conf keystone_authtoken memcached_servers ${SET_IP}:11211
@@ -49,8 +53,8 @@ crudini --set /etc/cinder/cinder.conf keystone_authtoken user_domain_name defaul
 crudini --set /etc/cinder/cinder.conf keystone_authtoken project_name service
 crudini --set /etc/cinder/cinder.conf keystone_authtoken username cinder
 crudini --set /etc/cinder/cinder.conf keystone_authtoken password ${STACK_PASSWD}
-crudini --set /etc/cinder/cinder.conf DEFAULT my_ip ${SET_IP}
 crudini --set /etc/cinder/cinder.conf oslo_concurrency lock_path /var/lib/cinder/tmp
+
 # Cinder Reg. DB
 su -s /bin/sh -c "cinder-manage db sync" cinder
 # Configure Compute to use Block Storage
