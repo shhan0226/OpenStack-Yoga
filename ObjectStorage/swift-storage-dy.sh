@@ -45,11 +45,14 @@ lsblk
 # rsync
 ##################################
 curl -o /etc/rsyncd.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/rsyncd.conf-sample
-crudini --set /etc/rsyncd.conf "" "pid file" /var/run/rsyncd.pid
-crudini --set /etc/rsyncd.conf "" "log file" /var/log/rsyncd.log
+
 crudini --set /etc/rsyncd.conf "" uid swift
 crudini --set /etc/rsyncd.conf "" gid swift
-crudini --set /etc/rsyncd.conf address ${SET_IP}
+crudini --set /etc/rsyncd.conf "" "log file" /var/log/rsyncd.log
+crudini --set /etc/rsyncd.conf "" "pid file" /var/run/rsyncd.pid
+crudini --set /etc/rsyncd.conf "" address ${SET_IP}
+
+
 # account
 crudini --set /etc/rsyncd.conf account path /srv/node
 crudini --set /etc/rsyncd.conf account "read only" false

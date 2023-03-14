@@ -1,6 +1,23 @@
 #!/bin/bash
 
 ##################################
+# Change root privileges.
+##################################
+IAMACCOUNT=$(whoami)
+echo "${IAMACCOUNT}"
+if [ "$IAMACCOUNT" = "root" ]; then
+    echo "It's root account."
+else
+    echo "It's not a root account."
+	  exit 100
+fi
+##################################
+# auth
+##################################
+source ../set.conf
+echo "... set!!"
+
+##################################
 # Rings
 ##################################
 ## Controller node:
