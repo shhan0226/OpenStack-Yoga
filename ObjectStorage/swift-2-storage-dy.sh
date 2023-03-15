@@ -183,31 +183,31 @@ chown -R root:swift /var/cache/swift
 chmod -R 775 /var/cache/swift
 
 # Storage node에서 아래 실행 :
-# swift-init all restart
+swift-init all restart
 
-systemctl enable rsync swift-account-auditor \
-swift-account-replicator \
-swift-account \
-swift-container-auditor \
-swift-container-replicator \
-swift-container-updater \
-swift-container \
-swift-object-auditor \
-swift-object-replicator \
-swift-object-updater \
-swift-object
+# systemctl enable rsync swift-account-auditor \
+# swift-account-replicator \
+# swift-account \
+# swift-container-auditor \
+# swift-container-replicator \
+# swift-container-updater \
+# swift-container \
+# swift-object-auditor \
+# swift-object-replicator \
+# swift-object-updater \
+# swift-object
 
-systemctl restart rsync swift-account-auditor \
-swift-account-replicator \
-swift-account \
-swift-container-auditor \
-swift-container-replicator \
-swift-container-updater \
-swift-container \
-swift-object-auditor \
-swift-object-replicator \
-swift-object-updater \
-swift-object
+# systemctl restart rsync swift-account-auditor \
+# swift-account-replicator \
+# swift-account \
+# swift-container-auditor \
+# swift-container-replicator \
+# swift-container-updater \
+# swift-container \
+# swift-object-auditor \
+# swift-object-replicator \
+# swift-object-updater \
+# swift-object
 
 
 echo "SWIFT STORAGE INSTALLED ... END"
