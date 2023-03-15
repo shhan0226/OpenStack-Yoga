@@ -112,4 +112,9 @@ chown -R root:swift /etc/swift
 
 echo "/etc/hosts \ 192.168.2.52 x86cinder \ 192.168.2.53 x86sw1 \ 192.168.2.54 x86sw2"
 
+. ../admin-openrc
+openstack user list
+openstack service list
+openstack endpoint list | grep swift
+
 echo "SWIFT CONTROLLER INSTALLED ... END"
