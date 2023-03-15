@@ -37,13 +37,14 @@ apt-get install -y swift swift-proxy python3-swiftclient python3-keystoneclient 
 
 # proxy-server
 curl -o /etc/swift/proxy-server.conf https://opendev.org/openstack/swift/raw/branch/stable/xena/etc/proxy-server.conf-sample
+
 crudini --set /etc/swift/proxy-server.conf DEFAULT bind_port 8080
 crudini --set /etc/swift/proxy-server.conf DEFAULT user swift
 crudini --set /etc/swift/proxy-server.conf DEFAULT swift_dir /etc/swift
 
 crudini --set /etc/swift/proxy-server.conf pipeline:main pipeline "catch_errors gatekeeper healthcheck proxy-logging cache container_sync bulk ratelimit authtoken keystoneauth container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server"
 crudini --set /etc/swift/proxy-server.conf app:proxy-server use egg:swift#proxy
-crudini --set /etc/swift/proxy-server.conf app:proxy-server allow_account_management true
+crudini --set /etc/swift/proxy-server.conf app:proxy-server allow_account_management True
 crudini --set /etc/swift/proxy-server.conf app:proxy-server account_autocreate True
 
 crudini --set /etc/swift/proxy-server.conf filter:keystoneauth use egg:swift#keystoneauth
