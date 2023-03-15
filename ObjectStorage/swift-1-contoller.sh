@@ -160,11 +160,12 @@ echo "scp account.ring.gz, container.ring.gz, object.ring.gz"
 sudo apt-get install sshpass -y
 #echo -e "vraptor\nyes" | scp /etc/swift/*.gz vraptor@192.168.2.53:/home/vraptor
 sshpass -p "vraptor" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /etc/swift/*.gz vraptor@192.168.2.53:/home/vraptor
+sshpass -p "vraptor" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /etc/swift/swift.conf vraptor@192.168.2.53:/home/vraptor
 
 #echo -e "vraptor\nyes" | scp /etc/swift/*.gz vraptor@192.168.2.54:/home/vraptor
 #scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /etc/swift/*.gz vraptor@192.168.2.54:/home/vraptor
 sshpass -p "vraptor" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /etc/swift/*.gz vraptor@192.168.2.54:/home/vraptor
-
+sshpass -p "vraptor" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /etc/swift/swift.conf vraptor@192.168.2.54:/home/vraptor
 
 
 

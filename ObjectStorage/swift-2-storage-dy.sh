@@ -50,6 +50,8 @@ lsblk
 ##################################
 sudo mv /home/vraptor/* /etc/swift/
 chown swift. /etc/swift/*.gz
+sudo mv /home/vraptor/swift.conf /etc/swift/
+chown swift. /etc/swift/swift.conf
 
 #curl -o /etc/swift/account-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/account-server.conf-sample
 #curl -o /etc/swift/container-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/container-server.conf-sample
