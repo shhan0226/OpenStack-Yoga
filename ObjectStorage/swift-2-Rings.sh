@@ -56,15 +56,13 @@ swift-ring-builder /etc/swift/object.builder
 swift-ring-builder /etc/swift/object.builder rebalance
 
 
+chown swift. /etc/swift/*.gz
+systemctl restart swift-proxy
+service memcached restart
+service swift-proxy restart
+
 ls /etc/swift
 echo "scp account.ring.gz, container.ring.gz, object.ring.gz"
 echo "scp /etc/swift/*.gz 10.0.0.71:/etc/swift/"
-
-
-chown swift. /etc/swift/*.gz
-systemctl restart swift-proxy
-
-service memcached restart
-service swift-proxy restart
 
 echo "SWIFT RING INSTALLED ... END"

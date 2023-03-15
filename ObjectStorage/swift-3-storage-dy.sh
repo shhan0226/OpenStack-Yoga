@@ -48,7 +48,7 @@ lsblk
 ##################################
 # server config
 ##################################
-echo "sudo /home/vraptor/* /etc/swift/"
+sudo /home/vraptor/* /etc/swift/
 chown swift. /etc/swift/*.gz
 curl -o /etc/swift/swift.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/swift.conf-sample
 crudini --set /etc/swift/swift.conf swift-hash swift_hash_path_suffix hash_suf_
