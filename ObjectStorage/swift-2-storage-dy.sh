@@ -53,6 +53,10 @@ chown swift. /etc/swift/*.gz
 sudo mv /home/vraptor/swift.conf /etc/swift/
 chown swift. /etc/swift/swift.conf
 
+# /etc/swift/internal-client.conf
+#curl -o /etc/swift/internal-client.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/internal-client.conf-sample
+curl -o /etc/swift/internal-client.conf https://opendev.org/openstack/swift/raw/branch/master/etc/internal-client.conf-sample
+
 #curl -o /etc/swift/account-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/account-server.conf-sample
 #curl -o /etc/swift/container-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/container-server.conf-sample
 #curl -o /etc/swift/object-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/object-server.conf-sample
@@ -63,10 +67,10 @@ curl -o /etc/swift/object-server.conf https://opendev.org/openstack/swift/raw/br
 
 ##/etc/swift/account-server.conf
 # 추가
-#crudini --set /etc/swift/account-server.conf DEFAULT bind_ip 0.0.0.0
+crudini --set /etc/swift/account-server.conf DEFAULT bind_ip 0.0.0.0
 #crudini --set /etc/swift/account-server.conf DEFAULT bind_port 6002
 
-crudini --set /etc/swift/account-server.conf DEFAULT bind_ip ${SET_IP}
+#crudini --set /etc/swift/account-server.conf DEFAULT bind_ip ${SET_IP}
 crudini --set /etc/swift/account-server.conf DEFAULT bind_port 6202
 crudini --set /etc/swift/account-server.conf DEFAULT user swift
 crudini --set /etc/swift/account-server.conf DEFAULT swift_dir /etc/swift
@@ -78,10 +82,10 @@ crudini --set /etc/swift/account-server.conf filter:recon recon_cache_path /var/
 
 ## /etc/swift/container-server.conf
 # 추가
-#crudini --set /etc/swift/container-server.conf DEFAULT bind_ip 0.0.0.0
+crudini --set /etc/swift/container-server.conf DEFAULT bind_ip 0.0.0.0
 #crudini --set /etc/swift/container-server.conf DEFAULT bind_port 6001
 
-crudini --set /etc/swift/container-server.conf DEFAULT bind_ip ${SET_IP}
+#crudini --set /etc/swift/container-server.conf DEFAULT bind_ip ${SET_IP}
 crudini --set /etc/swift/container-server.conf DEFAULT bind_port 6201
 crudini --set /etc/swift/container-server.conf DEFAULT user swift
 crudini --set /etc/swift/container-server.conf DEFAULT swift_dir /etc/swift
@@ -93,9 +97,10 @@ crudini --set /etc/swift/container-server.conf filter:recon recon_cache_path /va
 
 ## /etc/swift/object-server.conf
 # 추가
-#crudini --set /etc/swift/object-server.conf DEFAULT bind_ip 0.0.0.0
+crudini --set /etc/swift/object-server.conf DEFAULT bind_ip 0.0.0.0
 #crudini --set /etc/swift/object-server.conf DEFAULT bind_port 6000
-crudini --set /etc/swift/object-server.conf DEFAULT bind_ip ${SET_IP}
+
+#crudini --set /etc/swift/object-server.conf DEFAULT bind_ip ${SET_IP}
 crudini --set /etc/swift/object-server.conf DEFAULT bind_port 6200
 crudini --set /etc/swift/object-server.conf DEFAULT user swift
 crudini --set /etc/swift/object-server.conf DEFAULT swift_dir /etc/swift
