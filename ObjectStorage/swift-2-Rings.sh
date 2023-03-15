@@ -62,8 +62,17 @@ service memcached restart
 service swift-proxy restart
 
 ls /etc/swift
+
+
 echo "scp account.ring.gz, container.ring.gz, object.ring.gz"
-echo -e "vraptor" | scp /etc/swift/*.gz vraptor@192.168.2.53:/home/vraptor
-echo -e "vraptor" | scp /etc/swift/*.gz vraptor@192.168.2.53:/home/vraptor
+sudo apt-get install sshpass -y
+#echo -e "vraptor\nyes" | scp /etc/swift/*.gz vraptor@192.168.2.53:/home/vraptor
+sshpass -p "vraptor" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /etc/swift/*.gz vraptor@192.168.2.53:/home/vraptor
+
+#echo -e "vraptor\nyes" | scp /etc/swift/*.gz vraptor@192.168.2.54:/home/vraptor
+#scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /etc/swift/*.gz vraptor@192.168.2.54:/home/vraptor
+sshpass -p "vraptor" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /etc/swift/*.gz vraptor@192.168.2.54:/home/vraptor
+
+
 
 echo "SWIFT RING INSTALLED ... END"
