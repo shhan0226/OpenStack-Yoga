@@ -35,9 +35,13 @@ openstack service create --name cinderv3 --description "OpenStack Block Storage"
 openstack endpoint create --region RegionOne volumev3 public http://${SET_IP}:8776/v3/%\(project_id\)s
 openstack endpoint create --region RegionOne volumev3 internal http://${SET_IP}:8776/v3/%\(project_id\)s
 openstack endpoint create --region RegionOne volumev3 admin http://${SET_IP}:8776/v3/%\(project_id\)s
+
 # Install the Cinder packages
-apt install -y cinder-api cinder-scheduler
+#apt install -y cinder-api cinder-scheduler
+apt install -y cinder-api cinder-scheduler python3-cinderclient
+
 crudini --set /etc/cinder/cinder.conf database connection mysql+pymysql://cinder:${STACK_PASSWD}@${SET_IP}/cinder
+
 crudini --set /etc/cinder/cinder.conf DEFAULT transport_url rabbit://openstack:${STACK_PASSWD}@${SET_IP}
 crudini --set /etc/cinder/cinder.conf DEFAULT auth_strategy keystone
 crudini --set /etc/cinder/cinder.conf DEFAULT my_ip ${SET_IP}
