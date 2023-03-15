@@ -110,5 +110,6 @@ crudini --set /etc/swift/swift.conf swift-hash swift_hash_path_prefix hash_prf_
 
 chown -R root:swift /etc/swift
 
+echo "/etc/hosts \ 192.168.2.52 x86cinder \ 192.168.2.53 x86sw1 \ 192.168.2.54 x86sw2"
 
 echo "SWIFT CONTROLLER INSTALLED ... END"
