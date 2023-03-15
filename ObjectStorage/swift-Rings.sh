@@ -55,4 +55,7 @@ swift-ring-builder /etc/swift/object.builder add --region 1 --zone 2 --ip 192.16
 swift-ring-builder /etc/swift/object.builder
 swift-ring-builder /etc/swift/object.builder rebalance
 
+ls /etc/swift
+echo "scp account.ring.gz, container.ring.gz, object.ring.gz"
+
 echo "SWIFT RING INSTALLED ... END"
