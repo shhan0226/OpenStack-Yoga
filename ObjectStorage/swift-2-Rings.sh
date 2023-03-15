@@ -63,6 +63,7 @@ service swift-proxy restart
 
 ls /etc/swift
 echo "scp account.ring.gz, container.ring.gz, object.ring.gz"
-echo "scp /etc/swift/*.gz 10.0.0.71:/etc/swift/"
+echo -e "vraptor" | scp /etc/swift/*.gz vraptor@192.168.2.53:/home/vraptor
+echo -e "vraptor" | scp /etc/swift/*.gz vraptor@192.168.2.53:/home/vraptor
 
 echo "SWIFT RING INSTALLED ... END"

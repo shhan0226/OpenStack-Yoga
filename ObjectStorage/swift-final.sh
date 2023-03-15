@@ -25,8 +25,7 @@ echo "... set!!"
 # scp /etc/swift/*.gz vraptor@192.168.2.54:/home/vraptor
 
 # Storage node에서 아래 실행 :
-# sudo mv *.gz /etc/swift/
-# chown -R root:swift /etc/swift
+
 
 
 ## Controller node :
