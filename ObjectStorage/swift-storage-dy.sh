@@ -140,6 +140,9 @@ mkdir -p /var/cache/swift
 chown -R root:swift /var/cache/swift
 chmod -R 775 /var/cache/swift
 
+ls /etc/swift
+echo "scp account.ring.gz, container.ring.gz, object.ring.gz"
+
 
 ## Storage node
 # 서비스 실행
@@ -166,3 +169,6 @@ swift-object-auditor \
 swift-object-replicator \
 swift-object-updater \
 swift-object
+
+
+echo "SWIFT STORAGE INSTALLED ... END"
