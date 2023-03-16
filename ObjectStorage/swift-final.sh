@@ -20,7 +20,6 @@ service memcached restart
 service swift-proxy restart
 swift stat
 
-
 echo "TEST CMD..."
 echo "openstack container create test-container"
 echo "openstack container list"
