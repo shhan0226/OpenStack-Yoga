@@ -60,16 +60,12 @@ curl -o /etc/swift/internal-client.conf https://opendev.org/openstack/swift/raw/
 #curl -o /etc/swift/account-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/account-server.conf-sample
 #curl -o /etc/swift/container-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/container-server.conf-sample
 #curl -o /etc/swift/object-server.conf https://opendev.org/openstack/swift/raw/branch/stable/${OPENSTACK_VER}/etc/object-server.conf-sample
-
 curl -o /etc/swift/account-server.conf https://opendev.org/openstack/swift/raw/branch/master/etc/account-server.conf-sample
 curl -o /etc/swift/container-server.conf https://opendev.org/openstack/swift/raw/branch/master/etc/container-server.conf-sample
 curl -o /etc/swift/object-server.conf https://opendev.org/openstack/swift/raw/branch/master/etc/object-server.conf-sample
 
 ##/etc/swift/account-server.conf
-# 추가
 crudini --set /etc/swift/account-server.conf DEFAULT bind_ip 0.0.0.0
-#crudini --set /etc/swift/account-server.conf DEFAULT bind_port 6002
-
 #crudini --set /etc/swift/account-server.conf DEFAULT bind_ip ${SET_IP}
 crudini --set /etc/swift/account-server.conf DEFAULT bind_port 6202
 crudini --set /etc/swift/account-server.conf DEFAULT user swift
@@ -81,11 +77,8 @@ crudini --set /etc/swift/account-server.conf filter:recon use egg:swift#recon
 crudini --set /etc/swift/account-server.conf filter:recon recon_cache_path /var/cache/swift
 
 ## /etc/swift/container-server.conf
-# 추가
 crudini --set /etc/swift/container-server.conf DEFAULT bind_ip 0.0.0.0
 #crudini --set /etc/swift/container-server.conf DEFAULT bind_port 6001
-
-#crudini --set /etc/swift/container-server.conf DEFAULT bind_ip ${SET_IP}
 crudini --set /etc/swift/container-server.conf DEFAULT bind_port 6201
 crudini --set /etc/swift/container-server.conf DEFAULT user swift
 crudini --set /etc/swift/container-server.conf DEFAULT swift_dir /etc/swift
@@ -96,10 +89,7 @@ crudini --set /etc/swift/container-server.conf filter:recon use egg:swift#recon
 crudini --set /etc/swift/container-server.conf filter:recon recon_cache_path /var/cache/swift
 
 ## /etc/swift/object-server.conf
-# 추가
 crudini --set /etc/swift/object-server.conf DEFAULT bind_ip 0.0.0.0
-#crudini --set /etc/swift/object-server.conf DEFAULT bind_port 6000
-
 #crudini --set /etc/swift/object-server.conf DEFAULT bind_ip ${SET_IP}
 crudini --set /etc/swift/object-server.conf DEFAULT bind_port 6200
 crudini --set /etc/swift/object-server.conf DEFAULT user swift
@@ -110,7 +100,6 @@ crudini --set /etc/swift/object-server.conf pipeline:main pipeline "healthcheck 
 crudini --set /etc/swift/object-server.conf filter:recon use egg:swift#recon
 crudini --set /etc/swift/object-server.conf filter:recon recon_cache_path /var/cache/swift
 crudini --set /etc/swift/object-server.conf filter:recon recon_lock_path /var/lock
-
 
 ##################################
 # rsync
@@ -174,7 +163,6 @@ service rsync start
 ###############
 #end
 ###############
-
 # ownership
 chown -R swift:swift /srv/node
 # recon
@@ -182,7 +170,7 @@ mkdir -p /var/cache/swift
 chown -R root:swift /var/cache/swift
 chmod -R 775 /var/cache/swift
 
-# Storage node에서 아래 실행 :
+# 스토리지 노드 초기화
 swift-init all restart
 
 # systemctl enable rsync swift-account-auditor \
@@ -196,7 +184,6 @@ swift-init all restart
 # swift-object-replicator \
 # swift-object-updater \
 # swift-object
-
 # systemctl restart rsync swift-account-auditor \
 # swift-account-replicator \
 # swift-account \
@@ -208,6 +195,5 @@ swift-init all restart
 # swift-object-replicator \
 # swift-object-updater \
 # swift-object
-
 
 echo "SWIFT STORAGE INSTALLED ... END"
