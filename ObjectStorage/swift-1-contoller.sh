@@ -105,8 +105,6 @@ swift-ring-builder /etc/swift/object.builder rebalance
 # /etc/swift installation
 ##################################
 chown swift. /etc/swift/*.gz
-service memcached restart
-service swift-proxy restart
 
 # /etc/swift/*.gz
 ls /etc/swift
