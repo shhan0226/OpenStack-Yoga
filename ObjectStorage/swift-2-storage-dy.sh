@@ -78,7 +78,6 @@ crudini --set /etc/swift/account-server.conf filter:recon recon_cache_path /var/
 
 ## /etc/swift/container-server.conf
 crudini --set /etc/swift/container-server.conf DEFAULT bind_ip 0.0.0.0
-#crudini --set /etc/swift/container-server.conf DEFAULT bind_port 6001
 crudini --set /etc/swift/container-server.conf DEFAULT bind_port 6201
 crudini --set /etc/swift/container-server.conf DEFAULT user swift
 crudini --set /etc/swift/container-server.conf DEFAULT swift_dir /etc/swift
@@ -90,7 +89,6 @@ crudini --set /etc/swift/container-server.conf filter:recon recon_cache_path /va
 
 ## /etc/swift/object-server.conf
 crudini --set /etc/swift/object-server.conf DEFAULT bind_ip 0.0.0.0
-#crudini --set /etc/swift/object-server.conf DEFAULT bind_ip ${SET_IP}
 crudini --set /etc/swift/object-server.conf DEFAULT bind_port 6200
 crudini --set /etc/swift/object-server.conf DEFAULT user swift
 crudini --set /etc/swift/object-server.conf DEFAULT swift_dir /etc/swift
