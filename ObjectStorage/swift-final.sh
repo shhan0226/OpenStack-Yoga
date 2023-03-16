@@ -15,12 +15,9 @@ fi
 ##################################
 # Finalize installation
 ##################################
-
 . ../admin-openrc
 service memcached restart
 service swift-proxy restart
 swift stat
-
-
 
 echo "SWIFT FINAL INSTALLED ... END"
