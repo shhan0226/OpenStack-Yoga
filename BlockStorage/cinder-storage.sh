@@ -108,9 +108,10 @@ crudini --set /etc/cinder/cinder.conf DEFAULT backup_driver cinder.backup.driver
 crudini --set /etc/cinder/cinder.conf DEFAULT backup_swift_url http://${SET_IP}:8080/v1
 # openstack catalog show object-store
 
+echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.conf
 service cinder-backup restart
 service cinder-volume restart
 lsblk
 
-# openstack volume service list
+
 echo "CINDER STORAGE INSTALLED ... END"

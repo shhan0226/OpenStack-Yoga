@@ -18,11 +18,10 @@ fi
 sync
 FILE_PATH="./admin-openrc"
 if [ ! -f "$FILE_PATH" ]; then
-  echo "admin-openrc 파일이 존재하지 않습니다: $FILE_PATH"
+  echo "The "admin-openrc" file does not exist.: $FILE_PATH"
   exit 1
 fi
 
-echo "admin-openrc 파일이 존재합니다: $FILE_PATH"
 . admin-openrc
 
 ##################################
