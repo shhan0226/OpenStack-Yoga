@@ -38,8 +38,9 @@ nova-status upgrade check
 ##################################
 openstack user list
 openstack service list
-openstack catalog list
 openstack endpoint list
+openstack catalog list
+openstack catalog show object-store
 openstack volume service list
 openstack image list
 
