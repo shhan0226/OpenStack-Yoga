@@ -128,7 +128,7 @@ service swift-proxy restart
 openstack user list
 openstack service list
 openstack endpoint list | grep swift
-openstack volume service list
+
 
 echo "ADD /etc/hosts"
 echo "192.168.2.52 x86cinder"

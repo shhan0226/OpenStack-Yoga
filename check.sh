@@ -40,6 +40,7 @@ openstack user list
 openstack service list
 openstack catalog list
 openstack endpoint list
-#openstack image list
+openstack volume service list
+openstack image list
 
 
