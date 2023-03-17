@@ -154,6 +154,23 @@ sync
 sudo systemctl daemon-reload
 sudo systemctl enable etcd
 sudo systemctl restart etcd	
+
+##################################
+# CryptographyDeprecationWarning
+##################################
+echo "Fix CryptographyDeprecationWarning"
+if [ "$CPU_ARCH" = "arm64" ]; then
+    echo "This is ARM64"
+    pip3 install --upgrade sqlalchemy==1.4.13    
+    pip3 uninstall -y matrix-synapse twisted cryptography bcrypt cftp
+    pip3 install cryptography==3.2
+else
+    pip3 uninstall -y matrix-synapse twisted cryptography bcrypt cftp
+    pip3 install cryptography==3.2
+fi
+
+
+
 ##################################
 # Version Check
 ##################################

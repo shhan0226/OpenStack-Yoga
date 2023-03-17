@@ -7,15 +7,6 @@ echo "... set!!"
 # INSTALL START
 echo "1. Install Controller Setting ..."
 source ./Controller/controller-setting.sh
-
-if [ "$CPU_ARCH" = "arm64" ]; then
-    echo "This is ARM64"
-    pip3 install --upgrade sqlalchemy==1.4.13
-    sh ./fix.sh
-else    
-    sh ./fix.sh    
-fi
-
 echo "2. Install Keystone ..."
 source ./Controller/keystone.sh
 echo "3. Install Glance ..."
