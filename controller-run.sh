@@ -39,3 +39,11 @@ else
 		echo "FORWARDING NO CONFIG ... END"
 fi
 echo "CONTROLLER ... THE END"
+
+##################################
+# Version Check
+##################################
+openstack --version
+python --version
+pip --version
+service --status-all|grep +

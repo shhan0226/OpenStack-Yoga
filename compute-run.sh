@@ -20,3 +20,11 @@ else
     source ./Compute/neutron-compute.sh        
 fi
 echo "COMPUTE ... THE END"
+
+##################################
+# Version Check
+##################################
+openstack --version
+python --version
+pip --version
+service --status-all|grep +

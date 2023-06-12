@@ -37,5 +37,5 @@ crudini --set /etc/nova/nova.conf scheduler discover_hosts_in_cells_interval 300
 openstack compute service list
 openstack catalog list
 openstack image list
-nova-status upgrade check
+#nova-status upgrade check
 echo "NOVA CHECKED ... END"
