@@ -65,6 +65,7 @@ sync
 source admin-openrc
 openstack keypair create arm-key > arm-key.pem
 openstack keypair list --fit-width
+chmod 400 arm-key.pem
 ##################################
 # security 
 ##################################
