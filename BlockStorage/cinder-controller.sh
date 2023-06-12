@@ -56,9 +56,7 @@ crudini --set /etc/cinder/cinder.conf keystone_authtoken username cinder
 crudini --set /etc/cinder/cinder.conf keystone_authtoken password ${STACK_PASSWD}
 
 crudini --set /etc/cinder/cinder.conf DEFAULT my_ip ${SET_IP}
-
 crudini --set /etc/cinder/cinder.conf oslo_concurrency lock_path /var/lib/cinder/tmp
-
 #crudini --set /etc/cinder/cinder.conf DEFAULT iscsi_helper tgtadm
 
 # Cinder Reg. DB
