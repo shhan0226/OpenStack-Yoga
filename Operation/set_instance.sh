@@ -32,3 +32,5 @@ openstack floating ip list --fit-width
 read -p "INPUT IP SET? :" INPUT_IP
 openstack server add floating ip ${NAME_INSTANCE} ${INPUT_IP}
 openstack floating ip list
+echo "cirros : ssh -i arm-key.pem cirros@$INPUT_IP"
+echo "ubuntu : ssh -i arm-key.pem ubuntu@$INPUT_IP"
