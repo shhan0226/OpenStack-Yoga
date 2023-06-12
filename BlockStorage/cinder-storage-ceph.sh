@@ -39,7 +39,8 @@ crudini --set /etc/cinder/cinder.conf keystone_authtoken user_domain_name defaul
 crudini --set /etc/cinder/cinder.conf keystone_authtoken project_name service
 crudini --set /etc/cinder/cinder.conf keystone_authtoken username cinder
 crudini --set /etc/cinder/cinder.conf keystone_authtoken password ${STACK_PASSWD}
-crudini --set /etc/cinder/cinder.conf DEFAULT my_ip ${SET_IP2}
+crudini --set /etc/cinder/cinder.conf DEFAULT my_ip ${SET_IP}
+#crudini --set /etc/cinder/cinder.conf DEFAULT my_ip ${SET_IP2}
 #crudini --set /etc/cinder/cinder.conf lvm volume_driver cinder.volume.drivers.lvm.LVMVolumeDriver
 #crudini --set /etc/cinder/cinder.conf lvm volume_group cinder-volumes
 #crudini --set /etc/cinder/cinder.conf lvm target_protocol iscsi
