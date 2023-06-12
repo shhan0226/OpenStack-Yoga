@@ -86,16 +86,16 @@ su -s /bin/sh -c "glance-manage db_sync" glance
 service glance-api restart
 # Glance Verify operation
 sync
-. admin-openrc
-echo "${CPU_ARCH}"
-if [ "$CPU_ARCH" = "arm64" ]; then
-  echo "arm64 cirros!!"
-  wget http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-aarch64-disk.img
-  glance image-create --name "cirros_arm64" --file cirros-0.4.0-aarch64-disk.img --disk-format qcow2 --container-format bare --visibility=public
-else
-  echo "amd64 cirros!!" 
-  wget https://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img
-  glance image-create --name "cirros_x86" --file cirros-0.4.0-x86_64-disk.img --disk-format qcow2 --container-format bare --visibility=public
-fi
-glance image-list
+#. admin-openrc
+#echo "${CPU_ARCH}"
+#if [ "$CPU_ARCH" = "arm64" ]; then
+#  echo "arm64 cirros!!"
+#  wget http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-aarch64-disk.img
+#  glance image-create --name "cirros_arm64" --file cirros-0.4.0-aarch64-disk.img --disk-format qcow2 --container-format bare --visibility=public
+#else
+#  echo "amd64 cirros!!" 
+#  wget https://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img
+#  glance image-create --name "cirros_x86" --file cirros-0.4.0-x86_64-disk.img --disk-format qcow2 --container-format bare --visibility=public
+#fi
+#glance image-list
 echo "GLANCE INSTALLED ... END"
