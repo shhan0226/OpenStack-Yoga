@@ -11,7 +11,8 @@ else
     echo "It's not a root account."
 	exit 100
 fi
-
+cp /root/OpenStack-Yoga/admin-openrc .
+source admin-openrc
 ##################################
 # create instance
 ##################################
