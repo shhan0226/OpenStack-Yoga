@@ -25,7 +25,6 @@ openstack server create --image ubuntu2004 --flavor flavor1 --key-name arm-key -
 ##################################
 sync
 source admin-openrc
-. demo-openrc
 openstack floating ip create external
 openstack floating ip list --fit-width
 read -p "INPUT IP SET? :" INPUT_IP
