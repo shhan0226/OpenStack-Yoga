@@ -18,7 +18,7 @@ source admin-openrc
 ##################################
 sync
 source admin-openrc
-read -p "INPUT INSTANCE NAME? :" NAME_INST
+read -p "INPUT INSTANCE NAME? :" NAME_INSTANCE
 openstack server create --image ubuntu2004 --flavor flavor1 --key-name arm-key --network internal --user-data init.sh --security-group arm-secu ${NAME_INSTANCE}
 ##################################
 # add floating IP
