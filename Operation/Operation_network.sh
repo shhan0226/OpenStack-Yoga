@@ -56,6 +56,7 @@ sync
 source admin-openrc
 openstack router create arm-router
 openstack router add subnet arm-router internal-subnet
+openstack router set --external-gateway external arm-router
 openstack router list --fit-width
 ##################################
 # Keypair 
@@ -88,26 +89,3 @@ password: stack
 chpasswd: { expire: False }
 ssh_pwauth: True
 EOF
-##################################
-# create instance
-##################################
-sync
-source admin-openrc
-openstack server create --image ubuntu2004 --flavor flavor1 --key-name arm-key --network internal --user-data init.sh --security-group arm-secu VCS-VM-1
-##################################
-# add floating IP
-##################################
-sync
-source admin-openrc
-. demo-openrc
-openstack floating ip create external
-openstack floating ip list --fit-width
-
-read -p "IF SET? {yes|no|ENTER=no} :" CHECKER_IF
-if [ "$CHECKER_IF" = "yes" ]; then
-else
-  read -p "INPUT IF? :" INPUT_IF
-  openstack server add floating ip VCS-VM-1 ${INPUT_IF}
-fi
-openstack floating ip delete 192.168.1.123
-openstack floating ip list
